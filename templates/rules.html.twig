@@ -1,0 +1,164 @@
+{% extends "layout/base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Custom code block styling */
+        .rules-content__container pre {
+            margin: 1.5rem 0;
+            padding: 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .rules-content__container pre code {
+            display: block;
+            padding: 1rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+        
+        /* Adjust table styling */
+        .rules-content__container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .rules-content__container th, 
+        .rules-content__container td {
+            padding: 0.75rem;
+            border: 1px solid var(--color-border);
+        }
+        
+        .rules-content__container th {
+            background-color: var(--color-surface-secondary);
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <section class="page-header">
+        <div class="page-header__container page-container">
+            <h1 class="page-header__title">Rules</h1>
+            <p class="page-header__subtitle">
+            </p>
+        </div>
+    </section>
+    
+    <div class="page-container">   
+        <div class="toc-layout">
+            {# Generate TOC #}
+            <div class="toc-layout__toc">
+                <div class="toc toc--sticky">
+                    <h2 class="toc__title">Table of Contents</h2>
+                    <ul class="toc__list" id="toc-list">
+                        {# Filled by JavaScript #}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="rules-layout__content">
+                {{ source('@docs/rules.md')|markdown }}
+            </div>
+        </div>
+    </div>
+
+    {# Section "Prev / Next" #}
+    {{ include('component/_prev_next.html.twig', {
+        links: {
+            '/installation': 'Installation Guide',
+            '/examples': 'Examples',
+        }
+    }) }}
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const content = document.querySelector('main');
+            const tocList = document.querySelector('#toc-list');
+            
+            // Find all headings (excluding h1 which is typically the page title)
+            const headings = content.querySelectorAll('h2, h3, h4');
+            const tocItems = [];
+            
+            // Process each heading
+            headings.forEach((heading, index) => {
+                // Create ID from heading text
+                const id = heading.textContent
+                    .toLowerCase()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-');
+                
+                // Set ID on heading
+                heading.id = id;
+                heading.classList.add('toc-target');
+                
+                // Determine heading level (2, 3, 4, etc.)
+                const level = parseInt(heading.tagName.substring(1));
+                
+                // Add to TOC items
+                tocItems.push({
+                    id: id,
+                    text: heading.textContent,
+                    level: level
+                });
+            });
+            
+            // Generate TOC HTML
+            let html = '';
+            let prevLevel = 0;
+            
+            tocItems.forEach((item, index) => {
+                if (index === 0) {
+                    // First item
+                    html += `<li><a href="#${item.id}">${item.text}</a>`;
+                    prevLevel = item.level;
+                    
+                    if (index === tocItems.length - 1) {
+                        html += '</li>';
+                    }
+                } else {
+                    if (item.level > prevLevel) {
+                        // Start a new nested list
+                        html += '<ul class="toc__list--nested">';
+                        html += `<li><a href="#${item.id}">${item.text}</a>`;
+                    } else if (item.level < prevLevel) {
+                        // Close nested list(s)
+                        const levelsToClose = prevLevel - item.level;
+                        html += '</li>' + '</ul></li>'.repeat(levelsToClose);
+                        html += `<li><a href="#${item.id}">${item.text}</a>`;
+                    } else {
+                        // Same level
+                        html += `</li><li><a href="#${item.id}">${item.text}</a>`;
+                    }
+                    
+                    prevLevel = item.level;
+                    
+                    // Close the last item
+                    if (index === tocItems.length - 1) {
+                        html += '</li>' + '</ul></li>'.repeat(Math.max(0, prevLevel - 2));
+                    }
+                }
+            });
+            
+            // Insert TOC
+            tocList.innerHTML = html;
+            
+            // Apply syntax highlighting to code blocks
+            if (typeof hljs !== 'undefined') {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        });
+    </script>
+{% endblock %}

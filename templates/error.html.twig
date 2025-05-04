@@ -1,0 +1,16 @@
+{% extends "layout/base.html.twig" %}
+
+{% block content %}
+
+    <section class="error-page page-container">
+        <div class="error-number">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-description">The page you are looking for might have been removed, had its name changed, or is
+            temporarily unavailable.</p>
+        <div class="error-actions">
+            <a href="/" class="button button--primary">Go to Homepage</a>
+            <a href="/installation" class="button button--secondary">Installation Guide</a>
+        </div>
+    </section>
+
+{% endblock %}

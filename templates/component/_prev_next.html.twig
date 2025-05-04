@@ -1,0 +1,14 @@
+<section class="cta">
+    <div class="cta__container">
+        <h2 class="cta__title">{{ title ?? 'Ready to standardize your Twig templates?' }}</h2>
+        <p class="cta__text{{ text ?? 'Start using Twig CS Fixer to enforce consistent coding standards' }}</p>
+        <div class="cta__buttons">
+            {% if links|first|default %}
+                <a href="{{ links|keys|last }}" class="button button--primary">{{ links|first }}</a>
+            {% endif %}
+            {% if links|last|default %}
+                <a href="{{ links|keys|last }}" class="button button--secondary">{{ links|last }}</a>
+            {% endif %}
+        </div>
+    </div>
+</section>

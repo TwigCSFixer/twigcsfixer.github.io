@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page|title }} - Twig CS Fixer - Template Code Style</title>
+    {% set css_files = [
+        'tokens.css',
+        'styles.css',
+        'base.css',
+        'layout.css',
+        'components.css',
+    ] %}
+    {% for css_file in css_files %}
+        <link rel="stylesheet" href="/css/{{ css_file }}">
+    {% endfor %}
+    
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    {% endblock %}
+    
+     <script>
+      const theme = localStorage.getItem('user-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+    </script>
+    
+     {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Apply syntax highlighting to all code blocks
+                document.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightElement(block);
+                });
+            });
+        </script>
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+
+    {% block header %}
+        {{ include('layout/_header.html.twig', {currrent_url}) }}
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            {% block content %}
+
+            {% endblock %}
+        </main>
+    {% endblock %}
+
+    {% block footer %}
+        {{ include('layout/_footer.html.twig') }}
+    {% endblock %}
+
+{% endblock %}
+</body>
+</html>

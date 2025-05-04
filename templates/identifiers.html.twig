@@ -1,0 +1,5 @@
+{% extends "layout/page.html.twig" %}
+
+{% block page %}
+    {{ source('@docs/identifiers.md')|markdown }}
+{% endblock %}
