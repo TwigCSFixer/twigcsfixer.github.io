@@ -5,8 +5,8 @@
         <span class="code-window__dot"></span>
     </div>
     <div class="code-window__body">
-        <pre class="code-window__code"><code>
-                {{- block('code')|escape -}}
-            </code></pre>
+        {% if block('code') is defined %}
+        <pre class="code-window__code"><code>{{- block('code')|escape -}}</code></pre>
+        {% endif %}
     </div>
 </div>

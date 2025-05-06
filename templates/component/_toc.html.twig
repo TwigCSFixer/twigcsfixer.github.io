@@ -1,0 +1,21 @@
+<div class="toc">
+    <h2 class="toc__title">Table of Contents</h2>
+    <ul class="toc__list">
+        {% set prev_level = 2 %}
+        {% for item in toc %}
+            {% if item.level > prev_level %}
+                <ul class="toc__list--nested">
+            {% elseif item.level < prev_level %}
+                {% for i in range(0, prev_level - item.level - 1) %}
+                    </ul>
+                {% endfor %}
+            {% endif %}
+            <li><a href="#{{ item.slug }}">{{ item.text }}</a></li>
+            {% set prev_level = item.level %}
+        {% endfor %}
+        
+        {% for i in range(0, prev_level - 3) %}
+            </ul>
+        {% endfor %}
+    </ul>
+</div>

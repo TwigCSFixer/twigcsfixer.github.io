@@ -1,0 +1,26 @@
+<section class="code-demo">
+    <div class="code-demo__container">
+        <div class="code-demo__before-after">
+            <div class="code-panel code-panel--before">
+                <h3 class="code-panel__title">Before</h3>
+                {% embed 'component/_code.html.twig' with {
+                    template: before ?? '@docs/code/syntax.before.twig',
+                } %}
+                    {%- block code %}
+                        {{- source(template)|raw }}
+                    {%- endblock %}
+                {% endembed %}
+            </div>
+            <div class="code-panel  code-panel--after">
+                <h3 class="code-panel__title">After</h3>
+                {% embed 'component/_code.html.twig' with {
+                    template: before ?? '@docs/code/syntax.after.twig',
+                } %}
+                    {%- block code -%}
+                        {{- source(template)|raw }}
+                    {%- endblock -%}
+                {% endembed %}
+            </div>
+        </div>
+    </div>
+</section>

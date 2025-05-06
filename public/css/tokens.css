@@ -1,40 +1,107 @@
-/* Design System Tokens for Twig CS Fixer
+/* -------------------------------------------------
+   Design System Tokens for Twig CS Fixer
+   --------------------------------------------------
+   This file contains the design system tokens for the
+   Twig CS Fixer project. It includes color variables,
+   spacing, typography, and other design tokens.
 -------------------------------------------------- */
 
-/* CSS Variables using modern features like color-mix, layers, etc. */
 @layer base, components, utilities;
 
 @layer base {
-  /* Light theme (default) */
+  /* Core Design Tokens
+     These are the foundational variables that define the design system */
   :root {
-    /* Color System - Base Colors */
-    --color-primary-base: #0071e3;
-    --color-secondary-base: #147efb;
-    --color-neutral-base: #f5f5f7;
-    --color-dark-base: #1d1d1f;
-    --color-success-base: #06c258;
-    --color-warning-base: #f5b70a;
-    --color-error-base: #f94c10;
+    /* Color Base Values */
+    --color-primary-base: #ffc107;      /* Blue from logo's background as primary */
+    --color-secondary-base: #1a5275;    /* Green for secondary - leaf color */
+    --color-tertiary-base: #4caf50;     /* Badge yellow */
+    --color-dark-base: #0e1c28;         /* Dark blue background */
+    --color-neutral-base: #f0f2f5;      /* Light gray for neutral */
+    --color-success-base: #4caf50;      /* Success green */
+    --color-warning-base: #ffc107;      /* Warning yellow */
+    --color-error-base: #f44336;        /* Error red */
     
+    /* Typography */
+    --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     
-    /** START TODO TO REMOVE --- */
+    /* Font Sizes */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-md: 1rem;       /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+    --font-size-5xl: 3rem;      /* 48px */
+    --font-size-6xl: 3.75rem;   /* 60px */
     
-        /* Color System - Base Colors */
-    --color-primary-base: #1DA238;      /* Bright Green */
-    --color-secondary-base: #107C26;    /* Light Green */
-    --color-tertiary-base: #C9F53A;     /* Yellow Green */
-    --color-accent-base: #F9E825;       /* Yellow */
-    --color-highlight-base: #FFB324;    /* Orange Yellow */
-    --color-vibrant-base: #FF7A1F;      /* Orange */
-    --color-neutral-base: #F1F8F8;      /* Soft Beige */
-    --color-dark-base: #3C3C3C;         /* Charcoal */
-    --color-success-base: #4AFA7B;      /* Reusing Bright Green for success */
-    --color-warning-base: #FFB324;      /* Reusing Orange Yellow for warning */
-    --color-error-base: #FF7A1F;        /* Reusing Orange for error */
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Spacing System */
+    --space-3xs: 0.25rem;   /* 4px */
+    --space-2xs: 0.5rem;    /* 8px */
+    --space-xs: 0.75rem;    /* 12px */
+    --space-sm: 1rem;       /* 16px */
+    --space-md: 1.5rem;     /* 24px */
+    --space-lg: 2rem;       /* 32px */
+    --space-xl: 3rem;       /* 48px */
+    --space-2xl: 4rem;      /* 64px */
+    --space-3xl: 6rem;      /* 96px */
+    --space-4xl: 8rem;      /* 128px */
+    --space-5xl: 12rem;     /* 192px */
+    
+    /* Border Radius */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.5rem;    /* 8px */
+    --radius-lg: 1rem;      /* 16px */
+    --radius-xl: 1.5rem;    /* 24px */
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+    --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Z-index scale */
+    --z-below: -1;
+    --z-base: 0;
+    --z-above: 1;
+    --z-header: 100;
+    --z-overlay: 200;
+    --z-modal: 300;
+    --z-popover: 400;
+    --z-tooltip: 500;
+    
+    /* Breakpoints */
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    
+    /* Container Widths */
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1280px;
+  }
 
-        /** END TODO TO REMOVE --- */
-    
-    
+  /* Light Theme (Default) Color Variants */
+  :root {
     /* Color Variants using color-mix */
     --color-primary: var(--color-primary-base);
     --color-primary-light: color-mix(in srgb, var(--color-primary-base) 85%, white);
@@ -48,6 +115,11 @@
     --color-secondary-dark: color-mix(in srgb, var(--color-secondary-base), black 15%);
     --color-secondary-darker: color-mix(in srgb, var(--color-secondary-base), black 35%);
 
+    --color-accent: var(--color-secondary-base);       /* Green as accent */
+    --color-highlight: var(--color-tertiary-base);     /* Badge yellow as highlight */
+    --color-vibrant: var(--color-secondary-base);      /* Green as vibrant */
+
+    /* Neutral Color Scale */
     --color-neutral: var(--color-neutral-base);
     --color-neutral-50: color-mix(in srgb, var(--color-neutral-base) 95%, white);
     --color-neutral-100: color-mix(in srgb, var(--color-neutral-base) 90%, white);
@@ -60,6 +132,7 @@
     --color-neutral-800: color-mix(in srgb, var(--color-neutral-base), black 60%);
     --color-neutral-900: color-mix(in srgb, var(--color-neutral-base), black 80%);
 
+    /* Dark Color Scale */
     --color-dark: var(--color-dark-base);
     --color-dark-50: color-mix(in srgb, var(--color-dark-base) 5%, white);
     --color-dark-100: color-mix(in srgb, var(--color-dark-base) 10%, white);
@@ -72,6 +145,7 @@
     --color-dark-800: color-mix(in srgb, var(--color-dark-base) 90%, white);
     --color-dark-900: color-mix(in srgb, var(--color-dark-base) 95%, white);
 
+    /* Status Colors */
     --color-success: var(--color-success-base);
     --color-warning: var(--color-warning-base);
     --color-error: var(--color-error-base);
@@ -80,164 +154,69 @@
     --color-surface-primary: var(--color-neutral-50);
     --color-surface-secondary: color-mix(in srgb, var(--color-neutral-base) 98%, white);
     --color-surface-tertiary: color-mix(in srgb, var(--color-neutral-base) 95%, white);
+    --color-surface-blue: color-mix(in srgb, var(--color-primary-base) 10%, white);
     --color-surface-inverted: var(--color-dark-base);
 
     /* Text Colors */
     --color-text-primary: var(--color-dark-base);
     --color-text-secondary: color-mix(in srgb, var(--color-dark-base) 75%, white);
     --color-text-tertiary: color-mix(in srgb, var(--color-dark-base) 55%, white);
-    --color-text-inverted: white;
+    --color-text-inverted: #f5f5f5;  /* Slightly off-white for better readability */
     --color-text-brand: var(--color-primary);
+    --color-text-highlight: var(--color-secondary);
 
     /* Border Colors */
     --color-border-light: color-mix(in srgb, var(--color-dark-base) 10%, white);
     --color-border-medium: color-mix(in srgb, var(--color-dark-base) 20%, white);
     --color-border-heavy: color-mix(in srgb, var(--color-dark-base) 30%, white);
 
-    /* Shadow with modern alpha */
-    --shadow-sm: 0 2px 8px color-mix(in srgb, var(--color-dark-base) 8%, transparent);
-    --shadow-md: 0 4px 16px color-mix(in srgb, var(--color-dark-base) 12%, transparent);
-    --shadow-lg: 0 8px 24px color-mix(in srgb, var(--color-dark-base) 16%, transparent);
-    --shadow-xl: 0 12px 32px color-mix(in srgb, var(--color-dark-base) 20%, transparent);
+    /* Shadow with blue tint */
+    --shadow-sm: 0 2px 8px color-mix(in srgb, var(--color-primary-base) 8%, transparent);
+    --shadow-md: 0 4px 16px color-mix(in srgb, var(--color-primary-base) 12%, transparent);
+    --shadow-lg: 0 8px 24px color-mix(in srgb, var(--color-primary-base) 16%, transparent);
+    --shadow-xl: 0 12px 32px color-mix(in srgb, var(--color-primary-base) 20%, transparent);
 
-    /* Code Window */
+    /* Code Editor Theme */
     --code-bg: color-mix(in srgb, var(--color-dark-base) 95%, transparent);
     --code-text: color-mix(in srgb, white 85%, transparent);
     --code-keyword: #ff7ab2;
     --code-string: #a5e844;
     --code-attr: #7dcfff;
     --code-comment: #737373;
-
-    /* Theme Transition */
-    --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  [data-theme="light"] {
-    html,
-    body {
-       --color-surface-primary: #111112;
-      --color-surface-secondary: #1D1D1F;
-      --color-surface-tertiary: #2C2C2E;
-      --color-surface-inverted: #F5F5F7;
-  
-      --color-text-primary: #FFFFFF;
-      --color-text-secondary: rgba(255, 255, 255, 0.82);
-      --color-text-tertiary: rgba(255, 255, 255, 0.65);
-      --color-text-inverted: #1D1D1F;
-  
-      --color-border-light: rgba(255, 255, 255, 0.12);
-      --color-border-medium: rgba(255, 255, 255, 0.24);
-      --color-border-heavy: rgba(255, 255, 255, 0.36);
-    }
-    :root {
-      --color-surface-primary: #111112;
-      --color-surface-secondary: #1D1D1F;
-      --color-surface-tertiary: #2C2C2E;
-      --color-surface-inverted: #F5F5F7;
-  
-      --color-text-primary: #FFFFFF;
-      --color-text-secondary: rgba(255, 255, 255, 0.82);
-      --color-text-tertiary: rgba(255, 255, 255, 0.65);
-      --color-text-inverted: #1D1D1F;
-  
-      --color-border-light: rgba(255, 255, 255, 0.12);
-      --color-border-medium: rgba(255, 255, 255, 0.24);
-      --color-border-heavy: rgba(255, 255, 255, 0.36);
-  
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-      --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
-  
-      --code-bg: #000000;
-      --code-text: #F8F8F2;
-      --code-keyword: #FF7AB2;
-      --code-string: #A5E844;
-      --code-attr: #7DCFFF;
-      --code-comment: #6A737D;
-    }
-  }
-  /* Unchanged tokens */
+  /* Dark Theme Overrides */
+  [data-theme="dark"] {
+    --color-surface-primary: #0e1c28;     /* Match logo background */
+    --color-surface-secondary: #0a141d;    /* Slightly darker than primary */
+    --color-surface-tertiary: #112736;     /* Slightly lighter for tertiary surfaces */
+    --color-surface-blue: #1a5275;         /* Blue surface for accents */
 
-  :root {
-    /* Spacing System */
-    --space-3xs: 0.25rem; /* 4px */
-    --space-2xs: 0.5rem; /* 8px */
-    --space-xs: 0.75rem; /* 12px */
-    --space-sm: 1rem; /* 16px */
-    --space-md: 1.5rem; /* 24px */
-    --space-lg: 2rem; /* 32px */
-    --space-xl: 3rem; /* 48px */
-    --space-2xl: 4rem; /* 64px */
-    --space-3xl: 6rem; /* 96px */
-    --space-4xl: 8rem; /* 128px */
-    --space-5xl: 12rem; /* 192px */
+    --color-text-primary: #f5f5f5;         /* Slightly off-white for primary text */
+    --color-text-secondary: rgba(245, 245, 245, 0.85); /* Secondary text with transparency */
+    --color-text-tertiary: rgba(245, 245, 245, 0.65);  /* Tertiary text with transparency */
+    --color-text-inverted: #0e1c28;        /* Dark for inverted text */
 
-    /* Typography */
-    --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --color-border-light: rgba(245, 245, 245, 0.1);    /* Border colors with transparency */
+    --color-border-medium: rgba(245, 245, 245, 0.2);
+    --color-border-heavy: rgba(245, 245, 245, 0.3);
 
-    /* Font Sizes */
-    --font-size-xs: 0.75rem; /* 12px */
-    --font-size-sm: 0.875rem; /* 14px */
-    --font-size-md: 1rem; /* 16px */
-    --font-size-lg: 1.125rem; /* 18px */
-    --font-size-xl: 1.25rem; /* 20px */
-    --font-size-2xl: 1.5rem; /* 24px */
-    --font-size-3xl: 1.875rem; /* 30px */
-    --font-size-4xl: 2.25rem; /* 36px */
-    --font-size-5xl: 3rem; /* 48px */
-    --font-size-6xl: 3.75rem; /* 60px */
+    /* Deeper shadows for dark mode */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.6);
 
-    /* Line Heights */
-    --line-height-tight: 1.2;
-    --line-height-normal: 1.5;
-    --line-height-relaxed: 1.75;
-
-    /* Font Weights */
-    --font-weight-light: 300;
-    --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
-
-    /* Border Radius */
-    --radius-sm: 0.25rem; /* 4px */
-    --radius-md: 0.5rem; /* 8px */
-    --radius-lg: 1rem; /* 16px */
-    --radius-xl: 1.5rem; /* 24px */
-    --radius-full: 9999px;
-
-    /* Transitions */
-    --transition-fast: 150ms ease-in-out;
-    --transition-normal: 250ms ease-in-out;
-    --transition-slow: 350ms ease-in-out;
-
-    /* Z-index scale */
-    --z-below: -1;
-    --z-base: 0;
-    --z-above: 1;
-    --z-header: 100;
-    --z-overlay: 200;
-    --z-modal: 300;
-    --z-popover: 400;
-    --z-tooltip: 500;
-
-    /* Breakpoints */
-    --breakpoint-sm: 640px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 1024px;
-    --breakpoint-xl: 1280px;
-    --breakpoint-2xl: 1536px;
-
-    /* Container Widths */
-    --container-sm: 640px;
-    --container-md: 768px;
-    --container-lg: 1024px;
-    --container-xl: 1280px;
+    /* Darker code theme */
+    --code-bg: #051017;
+    --code-text: #F8F8F2;
+    --code-keyword: #FF7AB2;
+    --code-string: #A5E844;
+    --code-attr: #7DCFFF;
+    --code-comment: #6A737D;
   }
 
-  /*!* Apply theme transition to elements *!*/
+  /* Apply theme transition to body */
   body {
     transition: var(--theme-transition);
   }

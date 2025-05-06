@@ -1,0 +1,30 @@
+{% embed 'component/_code.html.twig' with {
+    template: '@docs/code/syntax.after.twig',
+} %}
+    {% block code %}
+        {{- source(template)|raw }}
+    {% endblock %}
+{% endembed %}
+
+
+{% embed 'component/_code.html.twig' with {
+    template: '@docs/code/syntax.after.twig',
+} %}
+    {% block code %}
+        {{- source(template)|raw }}
+    {% endblock %}
+{% endembed %}
+
+
+<div class="code-window">
+    <div class="code-window__header">
+        <span class="code-window__dot"></span>
+        <span class="code-window__dot"></span>
+        <span class="code-window__dot"></span>
+    </div>
+    <div class="code-window__body">
+        <pre class="code-window__code"><code>
+                {{- block('code')|escape -}}
+            </code></pre>
+    </div>
+</div>

@@ -18,6 +18,17 @@
     color: var(--color-text-primary);
     background-color: var(--color-surface-primary);
   }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
 
   a {
     color: var(--color-primary);
@@ -39,7 +50,8 @@
   }
 
   h1 {
-    font-size: var(--font-size-5xl);
+    font-size: var(--font-size-6xl);
+    text-wrap: balance;
     margin-bottom: var(--space-lg);
   }
 

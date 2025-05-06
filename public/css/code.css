@@ -1,0 +1,149 @@
+/* Blue‑Tide Highlight.js Theme  – Grande qualité ✨
+ * --------------------------------------------------
+ * Uses CSS custom properties so you can instantly tune
+ * the palette to match your site.
+ *
+ * Minimum HLJS v10.
+ * Paste into your build (e.g. src/styles) or host as a
+ * standalone file and include with:
+ *   <link rel="stylesheet" href="blue-tide-hljs.css" />
+ * -------------------------------------------------- */
+
+:root {
+  /* Light‑mode palette (override any of these in :root after this file) */
+  --hljs-bg: #f8fafc;          /* code block bg */
+  --hljs-fg: #0d1b2a;          /* base font colour */
+  --hljs-blue1: #2978b5;       /* headline blue */
+  --hljs-blue2: #1565c0;       /* number blue */
+  --hljs-blue3: #0d47a1;       /* keyword blue */
+  --hljs-gray: #5c6979;        /* comments */
+  --hljs-green: #2b9348;       /* strings */
+  --hljs-add-bg: rgba(43, 147, 72, 0.15);
+  --hljs-del-bg: rgba(183, 28, 28, 0.15);
+
+  /* Dark‑mode overrides */
+  --hljs-bg-dark: #0d1b2a;
+  --hljs-fg-dark: #e0e6ed;
+  --hljs-blue-light: #82aaff;
+  --hljs-blue-mid: #4fc3f7;
+  --hljs-blue-dark: #536dfe;
+  --hljs-gray-dark: #a6b1c2;
+  --hljs-green-light: #8be9fd;
+}
+
+.hljs {
+  background: var(--hljs-bg);
+  color: var(--hljs-fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  tab-size: 4;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------- */
+/* Syntax scope colours               */
+/* ---------------------------------- */
+.hljs-comment,
+.hljs-quote {
+  color: var(--hljs-gray);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-type,
+.hljs-doctag {
+  color: var(--hljs-blue3);
+  font-weight: 600;
+}
+
+.hljs-string,
+.hljs-bullet,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-variable {
+  color: var(--hljs-green);
+}
+
+.hljs-number,
+.hljs-literal {
+  color: var(--hljs-blue2);
+}
+
+.hljs-title,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-attribute {
+  color: var(--hljs-blue1);
+  font-weight: 600;
+}
+
+.hljs-addition {
+  background-color: var(--hljs-add-bg);
+}
+
+.hljs-deletion {
+  background-color: var(--hljs-del-bg);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+.hljs-link {
+  color: var(--hljs-blue1);
+  text-decoration: underline;
+}
+
+/* ---------------------------------- */
+/* Dark mode                          */
+/* ---------------------------------- */
+@media (prefers-color-scheme: dark) {
+  .hljs {
+    background: var(--hljs-bg-dark);
+    color: var(--hljs-fg-dark);
+  }
+  .hljs-comment,
+  .hljs-quote {
+    color: var(--hljs-gray-dark);
+  }
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-built_in,
+  .hljs-type,
+  .hljs-doctag {
+    color: var(--hljs-blue-light);
+  }
+  .hljs-string,
+  .hljs-bullet,
+  .hljs-regexp,
+  .hljs-symbol,
+  .hljs-template-tag,
+  .hljs-template-variable,
+  .hljs-variable {
+    color: var(--hljs-green-light);
+  }
+  .hljs-number,
+  .hljs-literal {
+    color: var(--hljs-blue-dark);
+  }
+  .hljs-title,
+  .hljs-name,
+  .hljs-selector-id,
+  .hljs-selector-class,
+  .hljs-attribute {
+    color: var(--hljs-blue-mid);
+  }
+}

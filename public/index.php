@@ -41,6 +41,68 @@ $twig->addFilter(new TwigFilter('markdown', function($content) {
     return $converter->convert($content)->getContent();
 }, ['is_safe' => ['html']]));
 
+// In public/index.php or wherever you define your Twig filters
+
+$twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
+    // Setup CommonMark environment
+    $config = [
+        'html_input' => 'allow',
+        'allow_unsafe_links' => false,
+        'commonmark' => [
+            'enable_em' => true,
+            'enable_strong' => true,
+            'use_asterisk' => true,
+            'use_underscore' => true,
+        ],
+    ];
+    
+    $environment = new CommonMarkEnvironment($config);
+    $environment->addExtension(new CommonMarkCoreExtension());
+    $environment->addExtension(new GithubFlavoredMarkdownExtension());
+
+    // Convert Markdown to HTML
+    $converter = new MarkdownConverter($environment);
+    $html = $converter->convert($content)->getContent();
+    
+    // Parse HTML to extract headings and add IDs
+    $dom = new \DOMDocument();
+    @$dom->loadHTML(mb_convert_encoding('<div>'.$html.'</div>', 'HTML-ENTITIES', 'UTF-8'));
+    $xpath = new \DOMXPath($dom);
+    
+    // Find all h2, h3, h4 headings
+    $toc = [];
+    $headings = $xpath->query('//h2|//h3|//h4');
+    
+    foreach ($headings as $heading) {
+        $level = intval(substr($heading->nodeName, 1));
+        $text = $heading->textContent;
+        $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower($text));
+        $slug = trim($slug, '-');
+        
+        // Add ID attribute to the heading
+        $heading->setAttribute('id', $slug);
+        
+        $toc[] = [
+            'level' => $level,
+            'text' => $text,
+            'slug' => $slug
+        ];
+    }
+    
+    // Get the modified HTML
+    $bodyNodes = $xpath->query('//body/div')->item(0);
+    $html = '';
+    foreach ($bodyNodes->childNodes as $node) {
+        $html .= $dom->saveHTML($node);
+    }
+    
+    return [
+        'content' => $html,
+        'toc' => $toc
+    ];
+}, ['is_safe' => ['html']]));
+
+
 // ---- RENDER PAGE ----
 
 echo $twig->render($page.'.html.twig', [

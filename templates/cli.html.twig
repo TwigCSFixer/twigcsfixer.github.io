@@ -1,25 +1,5 @@
-{% extends "layout/base.html.twig" %}
+{% extends "layout/page.html.twig" %}
 
-{% block content %}
-
-        <section class="page">
-            <div class="page-container">
-                {# ... #}
-                {{ include('@docs/command.md')|markdown }}
-            </div>
-        </section>
-    
-
-        {#   #}
-        <section class="cta">
-            <div class="cta__container">
-                <h2 class="cta__title">Ready to clean up your Twig templates?</h2>
-                <p class="cta__description">Get started in minutes with simple installation and configuration</p>
-                <div class="cta__actions">
-                    <a href="install.html" class="button button--large button--primary">Install Now</a>
-                    <a href="configuration.html" class="button button--large button--secondary">View Documentation</a>
-                </div>
-            </div>
-        </section>
-
-{% endblock %}
+{% block markdown -%}
+    {{- source('@docs/command.md')|raw }}
+{%- endblock %}
