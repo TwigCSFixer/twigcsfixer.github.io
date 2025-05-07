@@ -9,40 +9,40 @@
         </div>
     </section>
 
-        <section class="faq">
-            <div class="faq__container page-container">
-                <div class="faq__item">
-                    <h2 class="faq__question">What exactly does Twig CS Fixer do?</h2>
-                    <div class="faq__answer">
-                        <p>Twig CS Fixer automatically fixes coding style issues in your Twig templates. It enforces consistent indentation, spacing, tag formatting, and naming conventions to ensure code quality and readability across your project.</p>
-                    </div>
+    <section class="faq">
+        <div class="faq__container page-container">
+            <div class="faq__item">
+                <h2 class="faq__question">What exactly does Twig CS Fixer do?</h2>
+                <div class="faq__answer">
+                    <p>Twig CS Fixer automatically fixes coding style issues in your Twig templates. It enforces consistent indentation, spacing, tag formatting, and naming conventions to ensure code quality and readability across your project.</p>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">Is Twig CS Fixer compatible with my framework?</h2>
-                    <div class="faq__answer">
-                        <p>Yes! Twig CS Fixer works with any framework that uses Twig templates, including:</p>
-                        <ul class="checklist">
-                            <li class="checklist__item">Symfony</li>
-                            <li class="checklist__item">Drupal</li>
-                            <li class="checklist__item">Craft CMS</li>
-                            <li class="checklist__item">Any custom implementation using Twig 2.0+ or 3.0+</li>
-                        </ul>
-                    </div>
+            <div class="faq__item">
+                <h2 class="faq__question">Is Twig CS Fixer compatible with my framework?</h2>
+                <div class="faq__answer">
+                    <p>Yes! Twig CS Fixer works with any framework that uses Twig templates, including:</p>
+                    <ul class="checklist">
+                        <li class="checklist__item">Symfony</li>
+                        <li class="checklist__item">Drupal</li>
+                        <li class="checklist__item">Craft CMS</li>
+                        <li class="checklist__item">Any custom implementation using Twig 2.0+ or 3.0+</li>
+                    </ul>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">How can I customize the coding standards?</h2>
-                    <div class="faq__answer">
-                        <p>You can customize all rules in your <code>.twig-cs-fixer.php</code> configuration file:</p>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
+            <div class="faq__item">
+                <h2 class="faq__question">How can I customize the coding standards?</h2>
+                <div class="faq__answer">
+                    <p>You can customize all rules in your <code>.twig-cs-fixer.php</code> configuration file:</p>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                        </div>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
 
 <span class="code--keyword">return</span> (new Config())
     ->setRules([
@@ -54,24 +54,24 @@
         <span class="code--string">'lowercase_names'</span> => <span class="code--keyword">true</span>,
         <span class="code--string">'empty_tags'</span> => <span class="code--keyword">true</span>,
     ]);</code></pre>
-                            </div>
                         </div>
-                        <p>Check the <a href="/configuration">Configuration</a> page for a complete list of available rules and options.</p>
                     </div>
+                    <p>Check the <a href="/configuration">Configuration</a> page for a complete list of available rules and options.</p>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">How do I integrate Twig CS Fixer with CI/CD pipelines?</h2>
-                    <div class="faq__answer">
-                        <p>Twig CS Fixer can be easily integrated with CI/CD pipelines. Here's an example for GitHub Actions:</p>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code><span class="code--comment"># .github/workflows/twig-cs-fixer.yml</span>
+            <div class="faq__item">
+                <h2 class="faq__question">How do I integrate Twig CS Fixer with CI/CD pipelines?</h2>
+                <div class="faq__answer">
+                    <p>Twig CS Fixer can be easily integrated with CI/CD pipelines. Here's an example for GitHub Actions:</p>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                        </div>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code><span class="code--comment"># .github/workflows/twig-cs-fixer.yml</span>
 name: Twig CS Fixer
 
 on:
@@ -92,23 +92,23 @@ jobs:
         run: composer install
       - name: Check Twig templates
         run: vendor/bin/twig-cs-fixer check templates/</code></pre>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">Can I exclude certain files or directories?</h2>
-                    <div class="faq__answer">
-                        <p>Yes, you can exclude specific files or directories in your configuration:</p>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
+            <div class="faq__item">
+                <h2 class="faq__question">Can I exclude certain files or directories?</h2>
+                <div class="faq__answer">
+                    <p>Yes, you can exclude specific files or directories in your configuration:</p>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                        </div>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
 
 <span class="code--keyword">return</span> (new Config())
     ->setPaths([<span class="code--string">'templates/'</span>])
@@ -116,48 +116,48 @@ jobs:
         <span class="code--string">'templates/vendor/'</span>,
         <span class="code--string">'templates/legacy/'</span>
     ]);</code></pre>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">What's the difference between 'fix' and 'check' commands?</h2>
-                    <div class="faq__answer">
-                        <p>Twig CS Fixer provides two main commands:</p>
-                        <ul>
-                            <li><strong>fix</strong>: Automatically fixes coding style issues in your templates</li>
-                            <li><strong>check</strong>: Only reports issues without modifying files (useful for CI/CD)</li>
-                        </ul>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code><span class="code--comment"># Fix templates</span>
+            <div class="faq__item">
+                <h2 class="faq__question">What's the difference between 'fix' and 'check' commands?</h2>
+                <div class="faq__answer">
+                    <p>Twig CS Fixer provides two main commands:</p>
+                    <ul>
+                        <li><strong>fix</strong>: Automatically fixes coding style issues in your templates</li>
+                        <li><strong>check</strong>: Only reports issues without modifying files (useful for CI/CD)</li>
+                    </ul>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                        </div>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code><span class="code--comment"># Fix templates</span>
 vendor/bin/twig-cs-fixer fix templates/
 
 <span class="code--comment"># Check templates without modifying</span>
 vendor/bin/twig-cs-fixer check templates/</code></pre>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">How does Twig CS Fixer handle custom Twig extensions?</h2>
-                    <div class="faq__answer">
-                        <p>Twig CS Fixer can be configured to work with custom Twig functions, filters, and tags. You can register your custom elements in the configuration:</p>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
+            <div class="faq__item">
+                <h2 class="faq__question">How does Twig CS Fixer handle custom Twig extensions?</h2>
+                <div class="faq__answer">
+                    <p>Twig CS Fixer can be configured to work with custom Twig functions, filters, and tags. You can register your custom elements in the configuration:</p>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                        </div>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code><span class="code--keyword">use</span> TwigCsFixer\Config;
 
 <span class="code--keyword">return</span> (new Config())
     ->registerCustomElements([
@@ -172,55 +172,55 @@ vendor/bin/twig-cs-fixer check templates/</code></pre>
             <span class="code--string">'custom_tag'</span>,
         ],
     ]);</code></pre>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="faq__item">
-                    <h2 class="faq__question">How do I update Twig CS Fixer?</h2>
-                    <div class="faq__answer">
-                        <p>To update Twig CS Fixer to the latest version, run:</p>
-                        <div class="code-window">
-                            <div class="code-window__header">
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                                <span class="code-window__dot"></span>
-                            </div>
-                            <div class="code-window__body">
-                                <pre class="code-window__code"><code>composer update twig-cs-fixer/twig-cs-fixer</code></pre>
-                            </div>
+            <div class="faq__item">
+                <h2 class="faq__question">How do I update Twig CS Fixer?</h2>
+                <div class="faq__answer">
+                    <p>To update Twig CS Fixer to the latest version, run:</p>
+                    <div class="code-window">
+                        <div class="code-window__header">
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
+                            <span class="code-window__dot"></span>
                         </div>
-                        <p>Always check the changelog for any breaking changes before updating to a new major version.</p>
+                        <div class="code-window__body">
+                            <pre class="code-window__code"><code>composer update twig-cs-fixer/twig-cs-fixer</code></pre>
+                        </div>
                     </div>
-                </div>
-
-                <div class="faq__item">
-                    <h2 class="faq__question">I found a bug. How can I report it?</h2>
-                    <div class="faq__answer">
-                        <p>If you encounter any issues or bugs, please report them on our <a href="#">GitHub Issues</a> page. When reporting a bug, please include:</p>
-                        <ul>
-                            <li>Twig CS Fixer version</li>
-                            <li>PHP version</li>
-                            <li>Your configuration file</li>
-                            <li>Steps to reproduce the issue</li>
-                            <li>Expected vs. actual behavior</li>
-                        </ul>
-                    </div>
+                    <p>Always check the changelog for any breaking changes before updating to a new major version.</p>
                 </div>
             </div>
-        </section>
 
-        <section class="contact-support">
-            <div class="contact-support__container">
-                <h2 class="contact-support__title">Still Have Questions?</h2>
-                <p class="contact-support__text">Can't find the answer you're looking for? Feel free to reach out to our community or open an issue on GitHub.</p>
-                <div class="contact-support__buttons">
-                    <a href="#" class="button button--primary">GitHub Issues</a>
-                    <a href="#" class="button button--secondary">Community Support</a>
+            <div class="faq__item">
+                <h2 class="faq__question">I found a bug. How can I report it?</h2>
+                <div class="faq__answer">
+                    <p>If you encounter any issues or bugs, please report them on our <a href="#">GitHub Issues</a> page. When reporting a bug, please include:</p>
+                    <ul>
+                        <li>Twig CS Fixer version</li>
+                        <li>PHP version</li>
+                        <li>Your configuration file</li>
+                        <li>Steps to reproduce the issue</li>
+                        <li>Expected vs. actual behavior</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <section class="contact-support">
+        <div class="contact-support__container">
+            <h2 class="contact-support__title">Still Have Questions?</h2>
+            <p class="contact-support__text">Can't find the answer you're looking for? Feel free to reach out to our community or open an issue on GitHub.</p>
+            <div class="contact-support__buttons">
+                <a href="#" class="button button--primary">GitHub Issues</a>
+                <a href="#" class="button button--secondary">Community Support</a>
+            </div>
+        </div>
+    </section>
     
 
     {# Section "Prev / Next" #}
