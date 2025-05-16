@@ -1,5 +1,5 @@
 {% extends "layout/page.html.twig" %}
 
-{% block page %}
-    {{ source('@docs/custom.md')|markdown }}
-{% endblock %}
+{% block markdown -%}
+    {{ source('@docs/custom.md')|raw }}
+{%- endblock %}
