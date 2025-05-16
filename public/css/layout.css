@@ -1,8 +1,8 @@
 /* Header */
 .header {
-  backdrop-filter: blur(8px);
-  background-color: color-mix(in srgb, var(--color-surface-primary) 98%, transparent);
-  border-bottom: 1px solid var(--color-border-light);
+  backdrop-filter: blur(2px) saturate(.5);
+  background-color: color-mix(in oklab, var(--color-surface-primary) 92%, transparent);
+  border-bottom: 1px solid var(--color-surface-secondary);
   position: sticky;
   top: 0;
   z-index: var(--z-header);
@@ -23,8 +23,8 @@
 .header__logotype {
   display: block;
   width: auto;
-  height: 100%;
   min-height: 1.6rem;
+  height: 2em;
   position: relative;
   &:before {
     content: '';
@@ -125,41 +125,26 @@
     content: ' ';
     filter: blur(-1px);
     inset: 0;
-    opacity: 0.23;
+    opacity: 0.73;
     position: absolute;
     scale: 1.5;
     z-index: 0;
     mix-blend-mode: overlay;
     aspect-ratio: 1;
-  }
-
-  &:after {
-    background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
-    border-radius: 50%;
-    bottom: -19px;
-    box-shadow: 1px 1px 4px rgba(0 0 0 / .5);
-    content: " ";
-    display: block;
-    filter: brightness(1.1) contrast(1.05);
-    height: 2.2rem;
-    position: absolute;
-    right: 90px;
-    width: auto;
-    z-index: 40;
-    aspect-ratio: 1;
-    scale: 0.4;
+    box-shadow: 0 0 12px 6px inset rgba(0, 0, 0, 0.35), 0 0 32px 11px rgba(163, 253, 177, 0.6) !important;
   }
 }
 
 .hero__logotype {
   max-height: 6rem;
   margin: 0 auto var(--space-xs);
-   width: 38.9%;
+  max-width: min(36rem, 80vw);
   display: block;
   margin-inline: auto;
   scale: 1;
   margin-block-start: -1rem;
   margin-bottom: -1rem;
+  overflow: clip;
   svg {
     height: 2.5rem;
     width: auto;
@@ -169,6 +154,13 @@
   .hero__logo {
     display: block;
     width: 100%;
+    filter: drop-shadow(2px 4px 8px #03021a) contrast(1.05);
+    scale: 1.05;
+    transition: all var(--transition-slow);
+  }
+  
+  .hero:hover .hero__logo {
+    scale: 1.15;
   }
 
   .hero__title {
@@ -282,6 +274,9 @@
     color: var(--color-text-primary);
     font-size: var(--font-size-lg);
     margin-bottom: var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-items: first start;
   }
 
   .footer__text {

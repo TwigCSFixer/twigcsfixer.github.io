@@ -458,51 +458,9 @@
     width: 1.25rem;
     height: 1.25rem;
     transition: transform 0.2s ease;
+    position: relative;
   }
 
-  /* Tooltip */
-  .icon-button[data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.5rem 0.75rem;
-    background-color: var(--color-neutral);
-    color: var(--color-background);
-    font-size: 0.75rem;
-    border-radius: 0.25rem;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 10;
-  }
-
-  .icon-button[data-tooltip]::before {
-    content: '';
-    position: absolute;
-    bottom: -0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 0.375rem;
-    border-style: solid;
-    border-color: transparent transparent var(--color-text) transparent;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 10;
-  }
-
-  .icon-button[data-tooltip]:hover::after,
-  .icon-button[data-tooltip]:hover::before,
-  .icon-button[data-tooltip]:focus::after,
-  .icon-button[data-tooltip]:focus::before {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* Theme toggle specific styles */
   #theme-toggle .icon-button__icon--sun {
     display: none;
   }
