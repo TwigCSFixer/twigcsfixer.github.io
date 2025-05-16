@@ -38,7 +38,9 @@
 </head>
 <body>
 {% block body %}
-
+    
+    {{ include('layout/_logo.svg.twig') }}
+    
     {% block header %}
         {{ include('layout/_header.html.twig', {currrent_url}) }}
     {% endblock %}
