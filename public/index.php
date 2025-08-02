@@ -2,7 +2,6 @@
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-
 use League\CommonMark\Environment\Environment as CommonMarkEnvironment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -24,7 +23,10 @@ if (!\ctype_alnum($page)) {
 
 $loader = new FilesystemLoader([__DIR__.'/../templates']);
 $loader->addPath(__DIR__.'/../docs', 'docs');
-$twig = new Environment($loader);
+$twig = new Environment($loader, [
+    'debug' => true,
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $twig->addFilter(new TwigFilter('markdown', function($content) {
     $config = [
@@ -41,8 +43,6 @@ $twig->addFilter(new TwigFilter('markdown', function($content) {
     return $converter->convert($content)->getContent();
 }, ['is_safe' => ['html']]));
 
-// In public/index.php or wherever you define your Twig filters
-
 $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     // Setup CommonMark environment
     $config = [
@@ -56,6 +56,8 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
         ],
     ];
     
+    $content = trim($content, '\n');
+    
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
     $environment->addExtension(new GithubFlavoredMarkdownExtension());
@@ -66,7 +68,7 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     
     // Parse HTML to extract headings and add IDs
     $dom = new \DOMDocument();
-    @$dom->loadHTML(mb_convert_encoding('<div>'.$html.'</div>', 'HTML-ENTITIES', 'UTF-8'));
+    @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
     $xpath = new \DOMXPath($dom);
     
     // Find all h2, h3, h4 headings
@@ -74,7 +76,7 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     $headings = $xpath->query('//h2|//h3|//h4');
     
     foreach ($headings as $heading) {
-        $level = intval(substr($heading->nodeName, 1));
+        $level = (int) substr($heading->nodeName, 1);
         $text = $heading->textContent;
         $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower($text));
         $slug = trim($slug, '-');
@@ -89,8 +91,31 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
         ];
     }
     
+    // Nest the TOC structure
+    function buildNestedToc(array $flatToc, int &$index, int $parentLevel): array
+    {
+        $nested = [];
+        while ($index < count($flatToc)) {
+            $item = $flatToc[$index];
+            if ($item['level'] <= $parentLevel) {
+                return $nested;
+            }
+            $item['children'] = [];
+            $index++;
+            if ($index < count($flatToc) && $flatToc[$index]['level'] > $item['level']) {
+                $item['children'] = buildNestedToc($flatToc, $index, $item['level']);
+            }
+            $nested[] = $item;
+        }
+        
+        return $nested;
+    }
+    
+    $index= 0;
+    $toctree = buildNestedToc($toc, $index, 0);
+    
     // Get the modified HTML
-    $bodyNodes = $xpath->query('//body/div')->item(0);
+    $bodyNodes = $xpath->query('//body')->item(0);
     $html = '';
     foreach ($bodyNodes->childNodes as $node) {
         $html .= $dom->saveHTML($node);
@@ -98,10 +123,9 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     
     return [
         'content' => $html,
-        'toc' => $toc
+        'toc' => $toctree,
     ];
 }, ['is_safe' => ['html']]));
-
 
 // ---- RENDER PAGE ----
 

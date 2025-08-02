@@ -1,21 +1,15 @@
-<div class="toc">
-    <h2 class="toc__title">Table of Contents</h2>
+{% macro render_toc(items) %}
     <ul class="toc__list">
-        {% set prev_level = 2 %}
-        {% for item in toc %}
-            {% if item.level > prev_level %}
-                <ul class="toc__list--nested">
-            {% elseif item.level < prev_level %}
-                {% for i in range(0, prev_level - item.level - 1) %}
-                    </ul>
-                {% endfor %}
-            {% endif %}
-            <li><a href="#{{ item.slug }}">{{ item.text }}</a></li>
-            {% set prev_level = item.level %}
-        {% endfor %}
-        
-        {% for i in range(0, prev_level - 3) %}
-            </ul>
+        {% for item in items %}
+            <li>
+                <a href="#{{ item.slug }}">{{ item.text }}</a>
+                {% if item.children is defined and item.children|length > 0 %}
+                    {{ _self.render_toc(item.children) }}
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
-</div>
+{% endmacro %}
+
+{# Usage example: #}
+{{ _self.render_toc(toc) }}
