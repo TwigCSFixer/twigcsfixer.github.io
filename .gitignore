@@ -1,3 +1,4 @@
-vendor
 bin/public
+var
+vendor
 composer.lock

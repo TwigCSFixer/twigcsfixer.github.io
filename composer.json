@@ -5,6 +5,8 @@
     "require-dev": {
         "symfony/var-dumper": "^7.2",
         "league/commonmark": "^2.6",
-        "symfony/filesystem": "^7.2"
+        "symfony/filesystem": "^7.2",
+        "symfony/http-client": "^7.3",
+        "vincentlanglet/twig-cs-fixer": "^3.9"
     }
 }
