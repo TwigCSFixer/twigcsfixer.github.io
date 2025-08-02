@@ -12,9 +12,15 @@
 
   Ensures there is one space before and after block names.
 
+- **CompactHashRule**:
+
+  Ensures that hash key are not omitted. Options are:
+    - `compact`: hash key must be omitted if it is the same as the variable name.
+
 - **DelimiterSpacingRule** (Configurable):
 
-  Ensures there is one space before `}}`, `%}` and `#}`, and after `{{`, `{%`, `{#`. Options are:
+  Ensures there is one space before `}}`, `%}` and `#}`, and after `{{`, `{%`, `{#` if the content
+  is non-empty. Options are:
     - `skipIfNewLine`: ignore the spacing check if there is a new line (default true).
 
 - **EmptyLinesRule**:
@@ -171,6 +177,7 @@ new TwigCsFixer\Rules\Whitespace\IndentRule(3);
 - Twig
 - BlankEOFRule
 - BlockNameSpacingRule
+- CompactHashRule
 - EmptyLinesRule
 - HashQuoteRule
 - IncludeFunctionRule
