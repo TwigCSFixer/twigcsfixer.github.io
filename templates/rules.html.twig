@@ -1,5 +1,46 @@
 {% extends "layout/page.html.twig" %}
 
-{% block markdown %}
-    {{ source('@docs/rules.md')|raw }}
-{% endblock %}
+{% block markdown -%}
+    {{- source('@docs/rules.md')|raw }}
+{%- endblock %}
+
+{#{% block contentdfdf %}#}
+
+{#    <section class="page-header">#}
+{#        <div class="page-header__container page-container">#}
+{#            <h1 class="page-header__title">Formatting Rules</h1>#}
+{#            <p class="page-header__subtitle">#}
+{#                Discover the full list of configurable and fixable rules available in TwigCSFixer.#}
+{#            </p>#}
+{#        </div>#}
+{#    </section>#}
+
+{#    <div class="page-container">#}
+{#        <div class="toc-layout">#}
+{#            {% set markdown_data = source('@docs/rules.md')|markdown_with_toc %}#}
+
+{#            #}{# Generate TOC #}
+{#            <div class="toc-layout__toc">#}
+{#                <div class="toc toc--sticky">#}
+{#                    <h2 class="toc__title">Table of Contents</h2>#}
+{#                    <ul class="toc__list" id="toc-list">#}
+{#                        #}{# Generate the Table of Contents #}
+{#                        {{ include('component/_toc.html.twig', { toc: markdown_data.toc }) }}#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <div class="rules-layout__content">#}
+{#                    {{ markdown_data.content|raw }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+{#        #}{# Section "Prev / Next" #}
+{#        {{ include('component/_prev_next.html.twig', {#}
+{#            links: {#}
+{#                '/installation': 'Installation Guide',#}
+{#                '/examples': 'Examples',#}
+{#            }#}
+{#        }) }}#}
+{#    </div>#}
+
+{#{% endblock %}#}

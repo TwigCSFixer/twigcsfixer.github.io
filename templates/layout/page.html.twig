@@ -50,30 +50,31 @@
     
     <div class="page-container" id="content">   
         <div class="toc-layout">
-            {% set markdown_data -%}{% block markdown  %}{% endblock %}{% endset %}
-            {% set markdown_data = markdown_data|markdown_with_toc %}
-
+            {% set markdown_raw -%}{%- block markdown -%}{%- endblock -%}{%- endset %}
+            {% set markdown_data = markdown_raw|markdown_with_toc %}
+            
             {# Generate TOC #}
             <div class="toc-layout__toc">
                 <div class="toc toc--sticky">
-                    <ul class="toc__list" id="toc-list">
-                        {# Generate the Table of Contents #}
-                        {{ include('component/_toc.html.twig', { toc: markdown_data.toc }) }}
-                    </ul>
+                    {# Generate the Table of Contents #}
+                    {{ include('component/_toc.html.twig', { toc: markdown_data.toc }) }}
                 </div>
-                <div class="rules-layout__content">
-                    {{ markdown_data.content|raw }}
-                </div>
+            </div>
+
+            <div class="toc-layout__content">
+                {{ markdown_data.content|raw }}
             </div>
         </div>
     </div>
 
-    {# Section "Prev / Next" #}
-    {{ include('component/_prev_next.html.twig', {
-        links: {
-            '/installation': 'Installation Guide',
-            '/examples': 'Examples',
-        }
-    }) }}
+    {% block prev_next %}
+        {# Section "Prev / Next" #}
+        {{ include('component/_prev_next.html.twig', {
+            links: {
+                '/installation': 'Installation Guide',
+                '/examples': 'Examples',
+            }
+        }) }}
+    {% endblock %}
     
 {% endblock %}

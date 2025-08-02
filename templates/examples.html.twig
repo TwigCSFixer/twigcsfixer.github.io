@@ -1,28 +1,5 @@
-{% extends "layout/base.html.twig" %}
+{% extends "layout/page.html.twig" %}
 
-{% block content %}
-
-    <section class="page-header">
-        <div class="page-header__container page-container">
-            <h1 class="page-header__title">Twig CS Fixer Examples</h1>
-            <p class="page-header__subtitle">See how Twig CS Fixer improves code readability and consistency</p>
-        </div>
-    </section>
-
-    <section class="examples-intro">
-        <div class="examples-intro__container page-container">
-            <p>Twig CS Fixer helps maintain consistent, readable templates by enforcing coding standards. The following examples demonstrate how it transforms poorly formatted Twig code into clean, standardized templates.</p>
-        </div>
-    </section>
-
-    {# Section "Prev / Next" #}
-    {{ include('component/_prev_next.html.twig', {
-        title: 'Ready to improve your Twig templates?',
-        text: 'Start using Twig CS Fixer to enforce consistent coding standards',
-        links: {
-            '/installation': 'Installation Guide',
-            '/usage': 'Usage Guide',
-        }
-    }) }}
-    
+{% block markdown %}
+    {{ source('@docs/examples.md')|raw }}
 {% endblock %}
