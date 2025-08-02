@@ -104,7 +104,7 @@
 /* Hero Section */
 .hero {
   background: linear-gradient(180deg, var(--color-surface-primary), var(--color-surface-secondary));
-  padding: var(--space-4xl) 0;
+  padding: var(--space-4xl) 0 var(--space-xl);
   text-align: center;
 }
 
@@ -231,7 +231,7 @@
 .toc-layout__toc {
   display: flex;
   flex-direction: column;
-  padding-top: 4rem;
+  padding-top: 2rem;
 
   .toc {
     position: sticky;

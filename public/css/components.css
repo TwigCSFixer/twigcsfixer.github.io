@@ -30,12 +30,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-xs) var(--space-md);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-md);
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-fast);
     cursor: pointer;
     text-decoration: none;
+    line-height: 1.1;
   }
 
   .button--primary {
@@ -81,6 +82,7 @@
     font-size: var(--font-size-4xl);
     letter-spacing: -0.02em;
     color: var(--color-text-primary);
+    font-weight: 300;
   }
 
   .features__grid {
@@ -419,12 +421,14 @@
   code {
     font-family: var(--font-family-mono);
     font-size: 0.9em;
-    padding: 0.2em 0.4em;
-    background-color: #2222;
     border-radius: var(--radius-sm);
     border: 0;
+    display: inline-flex;
+    line-height: 1.5;
+    padding: .125em .25em;
+    background: #0009;
+    color: #fff6d3;
   }
-  
 
   /* Icon Button Component */
   .icon-button {
@@ -483,6 +487,7 @@
     align-items: center;
     margin-left: auto;
     margin-right: 1rem;
+    line-height: 1;
   }
 
   @media (max-width: 768px) {
@@ -499,28 +504,39 @@
 
 
    /* Table of Contents */
-  .toc {
-    background-color: var(--color-surface-secondary);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .toc__title {
-    font-size: 1.25rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-
-  .toc__list {
-    list-style-type: none;
-    padding-left: 0;
-    margin: 0;
-  }
-
-  .toc__list li {
-    margin-bottom: 0.5rem;
+        .toc {
+            background-color: var(--color-surface-secondary);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .toc__title {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .toc__list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+           
+          .toc__list {
+            margin-left: 0.75rem;
+            
+            li {
+              font-size: .95em;
+            }
+          }
+          
+        }
+        
+        .toc__list li {
+          display: flex;
+          flex-direction: column;
+          gap: .25rem;
   }
 
   .toc__list li a {

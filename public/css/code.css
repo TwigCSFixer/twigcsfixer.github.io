@@ -42,6 +42,7 @@
   border-radius: 0.75rem;
   overflow-x: auto;
   -webkit-font-smoothing: antialiased;
+  display: block;
 }
 
 /* ---------------------------------- */
