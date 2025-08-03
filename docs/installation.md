@@ -1,6 +1,6 @@
-## Installation
+# Installation
 
-### From composer
+## From composer
 
 This tool can be installed with [Composer](https://getcomposer.org/).
 
@@ -21,7 +21,7 @@ vendor/bin/twig-cs-fixer lint --fix /path/to/code
 > Although [bin-dependencies may have composer conflicts](https://github.com/bamarni/composer-bin-plugin#why-a-hard-problem-with-a-simple-solution),
 > this is the recommended way because it will autoload everything you need.
 
-### As a PHAR
+## As a PHAR
 
 You can always fetch the stable version as a Phar archive through the following
 link with the `VERSION` you're looking for:
