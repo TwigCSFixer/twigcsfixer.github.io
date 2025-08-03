@@ -1,43 +1,94 @@
 {% extends "layout/base.html.twig" %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <style>
-        /* Custom code block styling */
-        .rules-content__container pre {
-            margin: 1.5rem 0;
-            padding: 0;
-            border-radius: 0.5rem;
-            overflow: hidden;
+    <script>
+        class TOC {
+            constructor() {
+                this.tocLinks = document.querySelectorAll('.toc__list a[href^="#"]');
+                this.sections = new Map();
+                this.currentSection = null;
+                this.init();
+            }
+
+            init() {
+                if (this.tocLinks.length === 0) return;
+                this.setupSections();
+                this.createObserver();
+                this.observeSections();
+            }
+
+            setupSections() {
+                this.tocLinks.forEach(link => {
+                    const id = link.getAttribute('href').substring(1);
+                    const section = document.getElementById(id);
+                    if (section) {
+                        this.sections.set(section, link);
+                    }
+                });
+            }
+
+            createObserver() {
+                const options = {
+                    root: null,
+                    rootMargin: '-20% 0px -60% 0px',
+                    threshold: [0, 0.1, 0.5, 1]
+                };
+                this.observer = new IntersectionObserver((entries) => {
+                    this.handleIntersection(entries);
+                }, options);
+            }
+
+            observeSections() {
+                this.sections.forEach((link, section) => {
+                    this.observer.observe(section);
+                });
+            }
+
+            handleIntersection(entries) {
+                const visibleSections = entries
+                    .filter(entry => entry.isIntersecting)
+                    .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
+                if (visibleSections.length > 0) {
+                    const topSection = visibleSections[0].target;
+                    this.setCurrentSection(topSection);
+                }
+            }
+
+            setCurrentSection(section) {
+                if (this.currentSection === section) return;
+                this.clearCurrentSections();
+                this.currentSection = section;
+                const link = this.sections.get(section);
+                if (link) {
+                    link.parentElement.classList.add('toc__item--current');
+                    link.setAttribute('aria-current', 'true');
+                }
+            }
+
+            clearCurrentSections() {
+                this.tocLinks.forEach(link => {
+                    link.parentElement.classList.remove('toc__item--current');
+                    link.removeAttribute('aria-current');
+                });
+            }
+
+            destroy() {
+                if (this.observer) {
+                    this.observer.disconnect();
+                }
+            }
         }
-        
-        .rules-content__container pre code {
-            display: block;
-            padding: 1rem;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            overflow-x: auto;
-        }
-        
-        /* Adjust table styling */
-        .rules-content__container table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-        }
-        
-        .rules-content__container th, 
-        .rules-content__container td {
-            padding: 0.75rem;
-            border: 1px solid var(--color-border);
-        }
-        
-        .rules-content__container th {
-            background-color: var(--color-surface-secondary);
-            text-align: left;
-        }
-    </style>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.tocHighlighter = new TOC();
+        });
+    </script>
+{% endblock %}
+
+{% set current_url = app.request.getRequestUri() %}
+
+{% block header %}
+    {{ include('layout/_header.html.twig', {current_url: current_url}) }}
 {% endblock %}
 
 {% block content %}
@@ -47,12 +98,12 @@
             <h1 class="page-header__title">{{ page|title }}</h1>
         </div>
     </section>
-    
-    <div class="page-container" id="content">   
+
+    <div class="page-container" id="content">
         <div class="toc-layout">
             {% set markdown_raw -%}{%- block markdown -%}{%- endblock -%}{%- endset %}
             {% set markdown_data = markdown_raw|markdown_with_toc %}
-            
+
             {# Generate TOC #}
             <div class="toc-layout__toc">
                 <div class="toc toc--sticky">
@@ -76,5 +127,5 @@
             }
         }) }}
     {% endblock %}
-    
+
 {% endblock %}
