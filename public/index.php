@@ -7,6 +7,7 @@ use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 use Twig\TwigFilter;
+use Zenstruck\CommonMark\Extension\GitHub\AdmonitionExtension;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
@@ -33,10 +34,13 @@ $twig->addFilter(new TwigFilter('markdown', function($content) {
         'html_input' => 'allow',
         'allow_unsafe_links' => false,
     ];
+    
+    $content = trim($content);
 
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
     $environment->addExtension(new GithubFlavoredMarkdownExtension());
+    $environment->addExtension(new AdmonitionExtension());
 
     $converter = new MarkdownConverter($environment);
 
@@ -56,11 +60,12 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
         ],
     ];
     
-    $content = trim($content, '\n');
+    $content = trim($content);
     
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
     $environment->addExtension(new GithubFlavoredMarkdownExtension());
+    $environment->addExtension(new AdmonitionExtension());
 
     // Convert Markdown to HTML
     $converter = new MarkdownConverter($environment);
@@ -75,6 +80,12 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     $toc = [];
     $headings = $xpath->query('//h2|//h3|//h4');
     
+    // Remove H1 headings from the DOM
+    $h1Headings = $xpath->query('//h1');
+    foreach ($h1Headings as $h1) {
+        $h1->parentNode->removeChild($h1);
+    }
+
     foreach ($headings as $heading) {
         $level = (int) substr($heading->nodeName, 1);
         $text = $heading->textContent;
