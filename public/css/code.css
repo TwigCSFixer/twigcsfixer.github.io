@@ -22,7 +22,7 @@
   --hljs-del-bg: rgba(183, 28, 28, 0.15);
 
   /* Dark‑mode overrides */
-  --hljs-bg-dark: #0d1b2a;
+  --hljs-bg-dark: #08121C;
   --hljs-fg-dark: #e0e6ed;
   --hljs-blue-light: #82aaff;
   --hljs-blue-mid: #4fc3f7;
@@ -111,7 +111,7 @@
 /* ---------------------------------- */
 /* Dark mode                          */
 /* ---------------------------------- */
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
   .hljs {
     background: var(--hljs-bg-dark);
     color: var(--hljs-fg-dark);

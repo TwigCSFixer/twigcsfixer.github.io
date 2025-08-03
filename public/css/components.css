@@ -159,7 +159,7 @@
     gap: var(--space-2xs);
     padding: var(--space-xs) var(--space-sm);
     background-color: color-mix(in srgb, var(--code-bg) 85%, black);
-    border-bottom: 1px solid  color-mix(in srgb, var(--code-bg) 55%, black);
+    border-bottom: 1px solid color-mix(in srgb, var(--code-bg) 55%, black);
   }
 
   .code-window__dot {
@@ -179,12 +179,13 @@
   .code-window__dot:nth-child(3) {
     background-color: #27C93F;
   }
-  
+
   .code-panel--after {
     .code-window__dot:not(:nth-child(3)) {
       opacity: 0.15;
     }
   }
+
   .code-panel--before {
     .code-window__dot:not(:nth-child(1)) {
       opacity: 0.15;
@@ -249,8 +250,8 @@
     margin-bottom: var(--space-md);
     text-align: center;
   }
-  
-  .code-window__code code  {
+
+  .code-window__code code {
     background: none !important;
   }
 
@@ -427,7 +428,7 @@
     line-height: 1.5;
     padding: .125em .25em;
     background: #0009;
-    color: #fff6d3;
+    color: #FFF6D3;
   }
 
   /* Icon Button Component */
@@ -503,40 +504,40 @@
   }
 
 
-   /* Table of Contents */
-        .toc {
-            background-color: var(--color-surface-secondary);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .toc__title {
-            font-size: 1.25rem;
-            margin-top: 0;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .toc__list {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
-           
-          .toc__list {
-            margin-left: 0.75rem;
-            
-            li {
-              font-size: .95em;
-            }
-          }
-          
-        }
-        
-        .toc__list li {
-          display: flex;
-          flex-direction: column;
-          gap: .25rem;
+  /* Table of Contents */
+  .toc {
+    background-color: var(--color-surface-secondary);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .toc__title {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .toc__list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+
+    .toc__list {
+      margin-left: 0.75rem;
+
+      li {
+        font-size: .95em;
+      }
+    }
+
+  }
+
+  .toc__list li {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
   }
 
   .toc__list li a {
@@ -563,3 +564,73 @@
     scroll-margin-top: 100px;
   }
 }
+
+/* CSS for TOC current section styling */
+.toc__item--current > a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.toc__item--current > a::before {
+  animation: toc-indicator-in var(--transition-normal) ease-out forwards;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  content: '';
+  height: 1rem;
+  left: -1rem;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+}
+
+@keyframes toc-indicator-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scaleY(1);
+  }
+}
+
+.md-admonition {
+  background: color-mix(in oklch, transparent 95%, var(--color-text-primary));
+  border-left: .25em solid var(--color-admonition-border);
+  border-radius: .75rem;
+  color: inherit;
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+}
+
+.md-admonition > *:last-child {
+  margin-bottom: 0;
+}
+
+.md-admonition-label {
+  color: var(--color-admonition-text);
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.md-admonition-note {
+  --color-admonition-border: var(--color-success);
+  --color-admonition-text: var(--color-success);
+}
+
+.md-admonition-info {
+  --color-admonition-border: var(--color-success);
+  --color-admonition-text: var(--color-success);
+}
+
+.md-admonition-warning {
+  --color-admonition-border: var(--color-warning);
+  --color-admonition-text: var(--color-warning-base);
+}
+
