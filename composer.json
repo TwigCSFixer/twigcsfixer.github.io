@@ -1,12 +1,18 @@
 {
+    "license": "proprietary",
+    "name": "smnandre/twigcs-website",
     "require": {
         "twig/twig": "^3.21"
     },
     "require-dev": {
-        "symfony/var-dumper": "^7.2",
         "league/commonmark": "^2.6",
         "symfony/filesystem": "^7.2",
         "symfony/http-client": "^7.3",
-        "vincentlanglet/twig-cs-fixer": "^3.9"
-    }
+        "symfony/var-dumper": "^7.3",
+        "vincentlanglet/twig-cs-fixer": "^3.9",
+        "zenstruck/commonmark-extensions": "1.x-dev"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "type": "project"
 }
