@@ -16,6 +16,7 @@ NB: The four parts are optional, all those format are working
 - A::D
 
 When you want to disable a rule, you can use of the following syntax:
+
 ```twig
 {# twig-cs-fixer-disable A.B:C:D #} => Apply to the whole file
 {# twig-cs-fixer-disable-line A.B:C:D #} => Apply to the line of the comment
@@ -23,6 +24,7 @@ When you want to disable a rule, you can use of the following syntax:
 ```
 
 For instance:
+
 ```twig
 {# twig-cs-fixer-disable #} => Disable every rule for the whole file
 {# twig-cs-fixer-disable-line #} => Disable every rule for the current line
@@ -36,6 +38,7 @@ For instance:
 
 You can also disable multiple errors with a single comment, by separating them
 with a space or a comma:
+
 ```twig
 {# twig-cs-fixer-disable A B C #} => Disable A and B and C for the whole file
 {# twig-cs-fixer-disable-line A.B,C.D #} => Disable A.B and C.D for the current line

@@ -1,5 +1,35 @@
 {% extends "layout/page.html.twig" %}
 
+{% set page = 'Custom Rules' %}
+
 {% block markdown -%}
     {{ source('@docs/custom.md')|raw }}
 {%- endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #token-types + ul, 
+        #token-types + p + ul {
+            li {
+                margin-block-end: var(--space-lg);
+            }
+            li > p:first-child:not(:last-child) {
+                font-size: var(--font-size-sm);
+                font-family: var(--font-family-mono), monospace;
+                background: var(--color-surface-secondary);
+                display: inline-block;
+                font-weight: var(--font-weight-normal);   
+                padding: var(--space-2xs) var(--space-sm);
+                margin-block-end: var(--space-xs);
+                border-radius: var(--radius-md);
+                strong {
+                    font-weight: var(--font-weight-normal);
+                }
+            }
+            li > p + p {
+                margin-left: var(--space-md);
+            }
+        }
+    </style>
+{% endblock %}

@@ -92,10 +92,42 @@
 {% endblock %}
 
 {% block content %}
+    
+    <style>
+        .page_header__leaf {
+            position: absolute;
+            top: 0;
+            left: calc(50% - (var(--container-lg) / 2));
+            aspect-ratio: 1 / 1;
+            display: block;
+            bottom:0;
+            overflow-block: clip;
+            img {
+                display: block;
+                height: 75%;
+                width: auto;
+                position: absolute;
+                bottom:0;
+            }
+            img + img {
+                filter: grayscale(1);
+                scale: 3;
+                opacity: 0.3;
+                rotate: 15deg;
+                transform-origin: center bottom;
+                transform: translate(0, 20%);
+                mix-blend-mode: soft-light;
+            }
+        }
+    </style>
 
     <section class="page-header">
         <div class="page-header__container page-container">
             <h1 class="page-header__title">{{ page|title }}</h1>
+        </div>
+        <div class="page_header__leaf">
+            <img src="/images/twig-cs-fixer-leaf.png" alt="Twig CS Fixer Logo">
+            <img src="/images/twig-cs-fixer-leaf.png" alt="Twig CS Fixer Logo">
         </div>
     </section>
 
@@ -118,14 +150,16 @@
         </div>
     </div>
 
-    {% block prev_next %}
-        {# Section "Prev / Next" #}
-        {{ include('component/_prev_next.html.twig', {
-            links: {
-                '/installation': 'Installation Guide',
-                '/examples': 'Examples',
-            }
-        }) }}
-    {% endblock %}
+    {% if false %}
+        {% block prev_next %}
+            {# Section "Prev / Next" #}
+            {{ include('component/_prev_next.html.twig', {
+                links: {
+                    '/installation': 'Installation Guide',
+                    '/examples': 'Examples',
+                }
+            }) }}
+        {% endblock %}
+    {% endif %}
 
 {% endblock %}

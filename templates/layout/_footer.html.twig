@@ -28,8 +28,8 @@
                 <h4 class="footer__heading">CS Rules</h4>
                 <ul class="footer__list">
                     {% for url, label  in {
-                        '/rules': 'Standards Rules',
-                        '/standards': 'Standards',
+                        '/rules': 'Rules',
+                        '/rules#standards': 'Standards',
                         '/custom': 'Custom',
                     } %}
                         {{ _self.nav_item(url, label) }}

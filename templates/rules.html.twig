@@ -1,5 +1,7 @@
 {% extends "layout/page.html.twig" %}
 
+{% set page = 'Rules & Standards' %}
+
 {% block markdown -%}
     {{- source('@docs/rules.md')|raw }}
 {%- endblock %}
@@ -7,88 +9,35 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        :root {
-  --glass-bg: rgba(255,255,255,0.05);
-  --glass-blur: 8px;
-  --glass-border: rgba(255,255,255,0.2);
-  --glass-radius: 0.75rem;
-  --li-pad: 1rem;
-}
+        {# Select ul after h2#rules but before next one #}
+        h2#rules ~ :is(ul):not(h2#rules ~ h2 ~ *):has(li p strong) {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
 
-.toc-layout__content {
-  ul {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+            li {
+                background: color-mix(in oklch, var(--color-surface-secondary), transparent 70%);
+                border: 1px solid var(--color-surface-secondary);
+                border-radius: var(--radius-md);
+                padding: var(--space-md);
 
-    li {
-      background: #0b141c;
-      border: 1px solid #0004;
-      border-radius: var(--glass-radius);
-      padding: var(--li-pad);
-      transition: transform 200ms;
+                p:first-child {
+                    border-block-end: 1px solid var(--color-surface-secondary);
+                    padding-block-end: 1rem;
+                    margin-block-end: 1rem;
+                    font-size: .7rem;
+                    font-weight: 300;
+                    display: flex;
+                    justify-content: space-between;
+                    overflow: clip;
 
-      @media (hover:hover) {
-        &:hover {
-          transform: translateY(-3px);
+                    strong {
+                        font-weight: 600;
+                        font-size: 1.3rem;
+                        margin-inline-end: 100%;
+                    }
+                }
+            }
         }
-      }
-    }
-  }
-}
-main div ul li > p:first-child {
-  border-block-end: 4px solid #030815d6;
-  padding-block-end: 1rem;
-  margin-block-end: 1rem;
-  font-size: .7rem;
-  font-weight: 300;
-  display: flex;
-  justify-content: space-between;
-    strong {
-        font-weight: 600;
-        font-size: 1.3rem;
-    }
-}
-
     </style>
 {% endblock %}
-{# {% block contentdfdf %} #}
-
-{#    <section class="page-header"> #}
-{#        <div class="page-header__container page-container"> #}
-{#            <h1 class="page-header__title">Formatting Rules</h1> #}
-{#            <p class="page-header__subtitle"> #}
-{#                Discover the full list of configurable and fixable rules available in TwigCSFixer. #}
-{#            </p> #}
-{#        </div> #}
-{#    </section> #}
-
-{#    <div class="page-container"> #}
-{#        <div class="toc-layout"> #}
-{#            {% set markdown_data = source('@docs/rules.md')|markdown_with_toc %} #}
-
-{#            #}{# Generate TOC #}
-{#            <div class="toc-layout__toc"> #}
-{#                <div class="toc toc--sticky"> #}
-{#                    <h2 class="toc__title">Table of Contents</h2> #}
-{#                    <ul class="toc__list" id="toc-list"> #}
-{#                        #}{# Generate the Table of Contents #}
-{#                        {{ include('component/_toc.html.twig', { toc: markdown_data.toc }) }} #}
-{#                    </ul> #}
-{#                </div> #}
-{#                <div class="rules-layout__content"> #}
-{#                    {{ markdown_data.content|raw }} #}
-{#                </div> #}
-{#            </div> #}
-{#        </div> #}
-
-{#        #}{# Section "Prev / Next" #}
-{#        {{ include('component/_prev_next.html.twig', { #}
-{#            links: { #}
-{#                '/installation': 'Installation Guide', #}
-{#                '/examples': 'Examples', #}
-{#            } #}
-{#        }) }} #}
-{#    </div> #}
-
-{# {% endblock %} #}
