@@ -41,8 +41,8 @@ $installContent = trim($installContent);
 
 // Move up title levels for installation (h2->h1, h3->h2, etc.)
 $installContent = preg_replace_callback(
-    '/^(#{2,6})/m', 
-    fn($match): string => str_repeat('#', strlen($match[1]) - 1), 
+    '/^(#{2,6})/m',
+    fn ($match): string => str_repeat('#', strlen($match[1]) - 1),
     $installContent
 );
 

@@ -26,7 +26,7 @@ $fs->mirror(__DIR__.'/../public/images', $buildDir.'/images');
 // Configure Twig
 $loader = new FilesystemLoader($templateDir);
 $twig = new Environment($loader);
-    
+
 // Render HTML files
 $pages = glob($templateDir.'/*.html.twig');
 foreach ($pages as $page) {
@@ -39,5 +39,5 @@ foreach ($pages as $page) {
         'github_repository' => 'vincentlanglet/twig-cs-fixer',
         'github_username' => 'vincentlanglet',
     ]);
-    $fs->dumpFile(Path::join($buildDir,'/', $page.'.html'), $html);
+    $fs->dumpFile(Path::join($buildDir, '/', $page.'.html'), $html);
 }

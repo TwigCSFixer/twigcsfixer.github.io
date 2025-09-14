@@ -29,12 +29,12 @@ $twig = new Environment($loader, [
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-$twig->addFilter(new TwigFilter('markdown', function($content) {
+$twig->addFilter(new TwigFilter('markdown', function ($content) {
     $config = [
         'html_input' => 'allow',
         'allow_unsafe_links' => false,
     ];
-    
+
     $content = trim($content);
 
     $environment = new CommonMarkEnvironment($config);
@@ -47,7 +47,7 @@ $twig->addFilter(new TwigFilter('markdown', function($content) {
     return $converter->convert($content)->getContent();
 }, ['is_safe' => ['html']]));
 
-$twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
+$twig->addFilter(new TwigFilter('markdown_with_toc', function ($content) {
     // Setup CommonMark environment
     $config = [
         'html_input' => 'allow',
@@ -59,9 +59,9 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
             'use_underscore' => true,
         ],
     ];
-    
+
     $content = trim($content);
-    
+
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
     $environment->addExtension(new GithubFlavoredMarkdownExtension());
@@ -70,16 +70,16 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
     // Convert Markdown to HTML
     $converter = new MarkdownConverter($environment);
     $html = $converter->convert($content)->getContent();
-    
+
     // Parse HTML to extract headings and add IDs
     $dom = new \DOMDocument();
     @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
     $xpath = new \DOMXPath($dom);
-    
+
     // Find all h2, h3, h4 headings
     $toc = [];
     $headings = $xpath->query('//h2|//h3|//h4');
-    
+
     // Remove H1 headings from the DOM
     $h1Headings = $xpath->query('//h1');
     foreach ($h1Headings as $h1) {
@@ -91,17 +91,17 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
         $text = $heading->textContent;
         $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower($text));
         $slug = trim($slug, '-');
-        
+
         // Add ID attribute to the heading
         $heading->setAttribute('id', $slug);
-        
+
         $toc[] = [
             'level' => $level,
             'text' => $text,
             'slug' => $slug
         ];
     }
-    
+
     // Nest the TOC structure
     function buildNestedToc(array $flatToc, int &$index, int $parentLevel): array
     {
@@ -118,20 +118,26 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function($content) {
             }
             $nested[] = $item;
         }
-        
+
         return $nested;
     }
-    
-    $index= 0;
+
+    $index = 0;
     $toctree = buildNestedToc($toc, $index, 0);
-    
+
     // Get the modified HTML
     $bodyNodes = $xpath->query('//body')->item(0);
     $html = '';
     foreach ($bodyNodes->childNodes as $node) {
         $html .= $dom->saveHTML($node);
     }
-    
+
+    // Replace "/filename.md#anchor?query" with "/filename#anchor?query"
+    // Also remove "/docs/" or "docs/" from the URL start
+    $html = preg_replace_callback('/(href|src)="(\/?docs\/)?([a-zA-Z0-9_-]+)\.md(#?[a-zA-Z0-9_-]*\??[a-zA-Z0-9=&-]*)"/', function ($matches) {
+        return $matches[1].'="/'.$matches[3].$matches[4].'"';
+    }, $html);
+
     return [
         'content' => $html,
         'toc' => $toctree,
