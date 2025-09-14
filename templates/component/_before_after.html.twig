@@ -1,30 +1,222 @@
-{% embed 'component/_code.html.twig' with {
-    template: '@docs/code/syntax.after.twig',
-} %}
-    {% block code %}
-        {{- source(template)|raw }}
-    {% endblock %}
-{% endembed %}
+<style>
+  #baBefore, #baAfter { color: var(--code-comment); }
+  .ba-old {
+    text-decoration: underline 2px solid #ef4444;
+    background: rgba(239, 68, 68, .08);
+    border-radius: 4px;
+    color: #fff;
+  }
+  .ba-new {
+    background: rgba(34, 197, 94, .18);
+    color: #fff;
+    border-radius: 4px;
+    animation: ba-flash 800ms ease-out forwards;
+  }
+  @keyframes ba-flash {
+    0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.45); }
+    70%  { box-shadow: 0 0 0 12px rgba(34,197,94,0); }
+    100% { box-shadow: none; }
+  }
 
+</style>
 
-{% embed 'component/_code.html.twig' with {
-    template: '@docs/code/syntax.after.twig',
-} %}
-    {% block code %}
-        {{- source(template)|raw }}
-    {% endblock %}
-{% endembed %}
+<section class="code-demo"{% if id is defined %} id="{{ id }}"{% endif %}>
+  <div class="code-demo__container page-container">
+    <div class="code-demo__before-after">
+      <div class="code-panel code-panel--before">
+        <h3 class="code-panel__title">Before</h3>
+        <div class="code-window">
+          <div class="code-window__header">
+            <span class="code-window__dot"></span>
+            <span class="code-window__dot"></span>
+            <span class="code-window__dot"></span>
+          </div>
+          <div class="code-window__body">
+            <pre class="code-window__code"><code id="baBefore" class="nohighlight"></code></pre>
+          </div>
+        </div>
+      </div>
 
-
-<div class="code-window">
-    <div class="code-window__header">
-        <span class="code-window__dot"></span>
-        <span class="code-window__dot"></span>
-        <span class="code-window__dot"></span>
+      <div class="code-panel code-panel--after">
+        <h3 class="code-panel__title">After</h3>
+        <div class="code-window">
+          <div class="code-window__header">
+            <span class="code-window__dot"></span>
+            <span class="code-window__dot"></span>
+            <span class="code-window__dot"></span>
+          </div>
+          <div class="code-window__body">
+            <pre class="code-window__code"><code id="baAfter" class="nohighlight"></code></pre>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="code-window__body">
-        <pre class="code-window__code"><code>
-                {{- block('code')|escape -}}
-            </code></pre>
-    </div>
-</div>
+    <div class="ba-chips" id="baChips"></div>
+  </div>
+</section>
+
+<script>
+  {% verbatim %}
+  (function() {
+    'use strict';
+    const escapeHtml = (s) => s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    function indexOfNth(str, sub, nth = 1, fromIndex = 0) {
+      if (!sub) return -1;
+      let idx = -1, count = 0, i = fromIndex;
+      while (true) {
+        idx = str.indexOf(sub, i);
+        if (idx === -1) return -1;
+        count++;
+        if (count === nth) return idx;
+        i = idx + sub.length;
+      }
+    }
+
+    function renderWithHighlight(code, start, end, cls) {
+      const a = escapeHtml(code.slice(0, start));
+      const b = escapeHtml(code.slice(start, end));
+      const c = escapeHtml(code.slice(end));
+      return `${a}<span class="${cls}">${b}</span>${c}`;
+    }
+
+    const initialCode = `{%if user.active%}
+  <h2>{{user.name|upper}}</h2>
+  <p>
+    {{ "Joined:" ~
+       user.joinedAt|date(format="Y-m-d") }}
+  </p>
+
+  {{ include('user/card.html.twig',
+    {"id":user.id,
+     "show":true}
+  ) }}
+{%endif%}`;
+
+    const steps = [
+      { rule: 'Delimiter spacing', from: '{%if', to: '{% if' },
+      { rule: 'Delimiter spacing', from: 'active%}', to: 'active %}' },
+      { rule: 'Mustache + filter', from: `{{user.name|upper}}`, to: `{{ user.name | upper }}` },
+      { rule: 'Quote: single',     from: `"Joined:"`, to: `'Joined:'` },
+      { rule: 'Filter spacing',    from: 'joinedAt|date', to: 'joinedAt | date' },
+      { rule: 'Date named param',  from: `date(format="Y-m-d")`, to: `date(format: 'Y-m-d')` },
+      { rule: 'Hash key quotes',   from: `"id":user.id`, to: `'id': user.id` },
+      { rule: 'Hash key quotes',   from: `"show":true`, to: `'show': true` },
+      { rule: 'Collapse blank lines', from: `\n\n  {{ include(`, to: `\n  {{ include(` },
+      { rule: 'Block spacing',     from: '{%endif%}', to: '{% endif %}' },
+    ];
+
+    const beforeEl = document.getElementById('baBefore');
+    const afterEl  = document.getElementById('baAfter');
+    const chipsEl  = document.getElementById('baChips');
+
+    const leftCode = initialCode;
+    let rightCode = initialCode;
+    let running = false;
+    let runToken = 0;
+    const initialLineCount = (initialCode.match(/\n/g) || []).length + 1;
+
+        if (chipsEl) {
+      const seen = new Set();
+      const ruleOrder = [];
+      for (const s of steps) {
+        if (!seen.has(s.rule)) { seen.add(s.rule); ruleOrder.push(s.rule); }
+      }
+      const chipsHtml = ruleOrder.map((rule) => `
+        <label class=\"ba-chip\" data-rule=\"${rule}\"><span class=\"ba-check\"></span><span>${rule}</span></label>
+      `).join('') + `
+        <label class=\"ba-chip ba-chip--more\" data-chip=\"more\"><span>and many more …</span></label>
+      `;
+      chipsEl.innerHTML = chipsHtml;
+    }
+
+    function renderLeftPlain(){ beforeEl.innerHTML = escapeHtml(leftCode); }
+    function withPad(str){
+      const lines = (str.match(/\n/g) || []).length + 1;
+      const pad = Math.max(0, initialLineCount - lines);
+      return pad ? str + "\n".repeat(pad) : str;
+    }
+    function renderRightPlain(){ afterEl.innerHTML = escapeHtml(withPad(rightCode)); }
+
+    function resetToInitial() {
+      rightCode = initialCode;
+      renderLeftPlain();
+      renderRightPlain();
+    }
+
+    async function runAnimationOnce() {
+      if (running) return;
+      running = true;
+      const token = ++runToken;
+      resetToInitial();
+      const flashDelay = 600;
+      const betweenDelay = 400;
+      for (let i = 0; i < steps.length; i++) {
+        if (token !== runToken) { running = false; return; }
+        const s = steps[i];
+        const nth = s.nth || 1;
+
+        const leftStart = indexOfNth(leftCode, s.from, nth);
+        if (leftStart !== -1) {
+          const leftEnd = leftStart + s.from.length;
+          beforeEl.innerHTML = renderWithHighlight(leftCode, leftStart, leftEnd, 'ba-old');
+        }
+
+        let chipRef = null;
+        if (chipsEl) {
+          chipRef = chipsEl.querySelector(`[data-rule=\"${s.rule}\"]`);
+          if (chipRef) { chipRef.classList.add('show','is-active'); }
+        }
+
+        const rightStart = indexOfNth(rightCode, s.from, nth);
+        if (rightStart !== -1) {
+          const rightEnd = rightStart + s.from.length;
+          const replaced = rightCode.slice(0, rightStart) + s.to + rightCode.slice(rightEnd);
+          const newEnd = rightStart + s.to.length;
+          afterEl.innerHTML = renderWithHighlight(withPad(replaced), rightStart, newEnd, 'ba-new');
+
+          await new Promise(r => setTimeout(r, flashDelay));
+          if (token !== runToken) { running = false; return; }
+          rightCode = rightCode.slice(0, rightStart) + s.to + rightCode.slice(rightStart + s.from.length);
+          renderRightPlain();
+          if (chipRef) { chipRef.classList.remove('is-active'); chipRef.classList.add('is-checked'); }
+        }
+
+        await new Promise(r => setTimeout(r, betweenDelay));
+        if (token !== runToken) { running = false; return; }
+      }
+
+      renderLeftPlain();
+      running = false;
+
+      if (chipsEl) {
+        const more = chipsEl.querySelector('[data-chip=\"more\"]');
+        if (more) { more.classList.add('show'); }
+      }
+    }
+
+        const section = beforeEl ? beforeEl.closest('section') : null;
+    if (section) {
+      const io = new IntersectionObserver((entries) => {
+        const e = entries[0];
+        if (e.isIntersecting) {
+          runAnimationOnce();
+        } else {
+
+          runToken++;
+          running = false;
+          resetToInitial();
+          if (chipsEl) chipsEl.querySelectorAll('.ba-chip').forEach(c => c.classList.remove('show','is-active','is-checked'));
+        }
+      }, { root: null, rootMargin: '0px', threshold: 0.3 });
+      io.observe(section);
+    } else {
+
+      runAnimationOnce();
+    }
+
+  })();
+  {% endverbatim %}</script>

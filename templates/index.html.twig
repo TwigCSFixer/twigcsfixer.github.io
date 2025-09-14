@@ -1,4 +1,4 @@
-{% extends "layout/base.html.twig" %}
+{% extends 'layout/base.html.twig' %}
 
 {% set page = 'Twig CS Fixer - Link & Fix Templates' %}
 
@@ -21,14 +21,13 @@
             <p class="hero__subtitle">Automatically format and fix your Twig templates with intelligent, customizable rules</p>
             <div class="hero__actions">
                 <a href="/installation" class="button button--large button--primary">Install Now</a>
-                <a href="/installation" class="button button--large button--secondary">Getting started</a>
+                <a href="#before-after" class="button button--large button--secondary">Learn more</a>
             </div>
         </div>
     </section>
 
-    {{ include('component/_code_demo.html.twig', {
-        before: '@docs/code/syntax.before.twig',
-        after: '@docs/code/syntax.after.twig',
+    {{ include('component/_before_after.html.twig', {
+        id: 'before-after',
     }) }}
 
     <section class="features" id="features">
@@ -151,7 +150,6 @@
         text: 'Get started in minutes with simple installation and configuration',
         links: {
             '/installation': 'Installation Guide',
-            '/examples': 'Examples',
         },
     }) }}
 
