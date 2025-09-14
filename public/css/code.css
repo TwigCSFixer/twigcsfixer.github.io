@@ -11,13 +11,15 @@
 
 :root {
   /* Light‑mode palette (override any of these in :root after this file) */
-  --hljs-bg: #f8fafc;          /* code block bg */
-  --hljs-fg: #0d1b2a;          /* base font colour */
-  --hljs-blue1: #2978b5;       /* headline blue */
-  --hljs-blue2: #1565c0;       /* number blue */
-  --hljs-blue3: #0d47a1;       /* keyword blue */
-  --hljs-gray: #5c6979;        /* comments */
-  --hljs-green: #2b9348;       /* strings */
+  /* Use dark-style appearance in both themes */
+  --hljs-bg: var(--hljs-bg-dark);          /* code block bg */
+  --hljs-fg: var(--hljs-fg-dark);          /* base font colour */
+  /* Map light tokens to dark palette to keep styles identical */
+  --hljs-blue1: var(--hljs-blue-mid);     /* headline blue */
+  --hljs-blue2: var(--hljs-blue-dark);    /* number blue */
+  --hljs-blue3: var(--hljs-blue-light);   /* keyword blue */
+  --hljs-gray: var(--hljs-gray-dark);     /* comments */
+  --hljs-green: var(--hljs-green-light);  /* strings */
   --hljs-add-bg: rgba(43, 147, 72, 0.15);
   --hljs-del-bg: rgba(183, 28, 28, 0.15);
 
