@@ -178,6 +178,8 @@
   letter-spacing: 0.1em;
   margin-bottom: var(--space-md);
   font-weight: lighter;
+  z-index: 2;
+  position: relative;
 }
 
 .hero__subtitle {
@@ -188,6 +190,8 @@
   max-width: 36rem;
   font-weight: 200;
   text-wrap: balance;
+  z-index: 2;
+  position: relative;
 }
 
 .hero__actions {
@@ -195,6 +199,8 @@
   gap: var(--space-md);
   justify-content: center;
   margin-bottom: var(--space-xl);
+  z-index: 2;
+  position: relative;
 }
 
 .hero__visual {
@@ -212,7 +218,7 @@
   width: 20vw;
   height: 20vw;
   transform-origin: center;
-  filter: grayscale(1) opacity(.25);
+  filter: grayscale(1) opacity(.45);
 }
 
 
@@ -281,7 +287,7 @@
 
 .footer {
   background-color: var(--color-surface-secondary);
-  border-top: 1px solid var(--color-dark);
+  border-top: 1px solid var(--color-footer-border);
   padding: var(--space-xl) 0 0;
 }
 
@@ -343,7 +349,7 @@
 }
 
 .footer__bottom {
-  border-top: 1px solid var(--color-dark-base);
+  border-top: 1px solid var(--color-footer-border);
   margin-top: var(--space-md);
   padding-block: var(--space-md);
   text-align: center;
