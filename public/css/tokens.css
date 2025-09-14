@@ -150,10 +150,10 @@
     --color-warning: var(--color-warning-base);
     --color-error: var(--color-error-base);
 
-    /* Surface Colors */
-    --color-surface-primary: var(--color-neutral-50);
-    --color-surface-secondary: color-mix(in srgb, var(--color-neutral-base) 98%, white);
-    --color-surface-tertiary: color-mix(in srgb, var(--color-neutral-base) 95%, white);
+    /* Surface Colors (light theme) */
+    --color-surface-primary: #ffffff;
+    --color-surface-secondary: var(--color-neutral-100);
+    --color-surface-tertiary: var(--color-neutral-50);
     --color-surface-blue: color-mix(in srgb, var(--color-primary-base) 10%, white);
     --color-surface-inverted: var(--color-dark-base);
 
@@ -169,6 +169,9 @@
     --color-border-light: color-mix(in srgb, var(--color-dark-base) 10%, white);
     --color-border-medium: color-mix(in srgb, var(--color-dark-base) 20%, white);
     --color-border-heavy: color-mix(in srgb, var(--color-dark-base) 30%, white);
+
+    /* Component-specific Borders */
+    --color-footer-border: var(--color-border-light);
 
     /* Shadow with blue tint */
     --shadow-sm: 0 2px 8px color-mix(in srgb, var(--color-primary-base) 8%, transparent);
@@ -200,6 +203,10 @@
     --color-border-light: rgba(245, 245, 245, 0.1);    /* Border colors with transparency */
     --color-border-medium: rgba(245, 245, 245, 0.2);
     --color-border-heavy: rgba(245, 245, 245, 0.3);
+
+    /* Component-specific Borders */
+    /* Restore previous darker divider tone for dark theme */
+    --color-footer-border: var(--color-dark-base);
 
     /* Deeper shadows for dark mode */
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
