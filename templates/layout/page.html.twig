@@ -1,4 +1,4 @@
-{% extends "layout/base.html.twig" %}
+{% extends 'layout/base.html.twig' %}
 
 {% block stylesheets %}
     <script>
@@ -92,7 +92,7 @@
 {% endblock %}
 
 {% block content %}
-    
+
     <style>
         .page_header__leaf {
             position: absolute;
@@ -140,7 +140,7 @@
             <div class="toc-layout__toc">
                 <div class="toc toc--sticky">
                     {# Generate the Table of Contents #}
-                    {{ include('component/_toc.html.twig', { toc: markdown_data.toc }) }}
+                    {{ include('component/_toc.html.twig', {toc: markdown_data.toc}) }}
                 </div>
             </div>
 
@@ -156,8 +156,7 @@
             {{ include('component/_prev_next.html.twig', {
                 links: {
                     '/installation': 'Installation Guide',
-                    '/examples': 'Examples',
-                }
+                },
             }) }}
         {% endblock %}
     {% endif %}

@@ -15,10 +15,10 @@
             <div class="footer__column">
                 <h4 class="footer__heading">Links</h4>
                 <ul class="footer__list">
-                    {% for url, label  in {
+                    {% for url, label in {
                         '/installation': 'Installation',
                         '/configuration': 'Configuration',
-                        '/examples': 'Examples',
+                        '/cli': 'CLI',
                     } %}
                         {{ _self.nav_item(url, label) }}
                     {% endfor %}
@@ -27,7 +27,7 @@
             <div class="footer__column">
                 <h4 class="footer__heading">CS Rules</h4>
                 <ul class="footer__list">
-                    {% for url, label  in {
+                    {% for url, label in {
                         '/rules': 'Rules',
                         '/rules#standards': 'Standards',
                         '/custom': 'Custom',
@@ -42,19 +42,19 @@
                     {% for label, url in {
                         'Pull Requests': github_url ~ '/pulls',
                         'Issues & RFC': github_url ~ '/issues',
-                        'Discussions': github_url ~ '/discussions',
+                        Discussions: github_url ~ '/discussions',
                     } %}
                         {{ _self.nav_item(url, label) }}
                     {% endfor %}
                 </ul>
             </div>
         </div>
-        <div class="footer__bottom">
-            <p class="footer__copyright">Twig CS Fixer &copy; {{ 'now'|date('Y') }} 
-                <a href="https://github.com/VincentLanglet" rel="author">Vincent Langlet</a>. 
-                All rights reserved.
-            </p>
-        </div>
+    </div>
+    <div class="footer__bottom">
+        <p class="footer__copyright">Twig CS Fixer &copy; {{ 'now'|date('Y') }}
+            <a href="https://github.com/VincentLanglet" rel="author">Vincent Langlet</a>.
+            All rights reserved.
+        </p>
     </div>
 </footer>
 

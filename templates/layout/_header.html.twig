@@ -56,10 +56,11 @@
                         const currentTheme = document.documentElement.getAttribute('data-theme');
                         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
                         document.documentElement.setAttribute('data-theme', newTheme);
-                        localStorage.setItem('theme', newTheme);
+                        localStorage.setItem('user-theme', newTheme);
                     });
                 });
             </script>
+            -->
 
             {# -- GitHub Button -- #}
             <a href="https://github.com/VincentLanglet/Twig-CS-Fixer" class="icon-button" aria-label="View on GitHub"

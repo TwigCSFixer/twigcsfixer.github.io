@@ -1,4 +1,4 @@
-{% extends "layout/page.html.twig" %}
+{% extends 'layout/page.html.twig' %}
 
 {% set page = 'Custom Rules' %}
 
@@ -9,7 +9,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        #token-types + ul, 
+        #token-types + ul,
         #token-types + p + ul {
             li {
                 margin-block-end: var(--space-lg);
@@ -19,7 +19,7 @@
                 font-family: var(--font-family-mono), monospace;
                 background: var(--color-surface-secondary);
                 display: inline-block;
-                font-weight: var(--font-weight-normal);   
+                font-weight: var(--font-weight-normal);
                 padding: var(--space-2xs) var(--space-sm);
                 margin-block-end: var(--space-xs);
                 border-radius: var(--radius-md);

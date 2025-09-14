@@ -6,7 +6,7 @@
             {% if links|first|default %}
                 <a href="{{ links|keys|first }}" class="button button--primary">{{ links|first }}</a>
             {% endif %}
-            {% if links|last|default %}
+            {% if links|last|default and links|length > 1 %}
                 <a href="{{ links|keys|last }}" class="button button--secondary">{{ links|last }}</a>
             {% endif %}
         </div>

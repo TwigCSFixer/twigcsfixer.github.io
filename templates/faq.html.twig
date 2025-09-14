@@ -1,6 +1,6 @@
-{% extends "layout/page.html.twig" %}
+{% extends 'layout/page.html.twig' %}
 
-{% set page= 'FAQ' %}
+{% set page = 'FAQ' %}
 
 {% block markdown -%}
     {{ source('@docs/faq.md')|raw }}

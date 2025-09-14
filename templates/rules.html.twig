@@ -1,4 +1,4 @@
-{% extends "layout/page.html.twig" %}
+{% extends 'layout/page.html.twig' %}
 
 {% set page = 'Rules & Standards' %}
 
@@ -16,11 +16,6 @@
             gap: var(--space-lg);
 
             li {
-                background: color-mix(in oklch, var(--color-surface-secondary), transparent 70%);
-                border: 1px solid var(--color-surface-secondary);
-                border-radius: var(--radius-md);
-                padding: var(--space-md);
-
                 p:first-child {
                     border-block-end: 1px solid var(--color-surface-secondary);
                     padding-block-end: 1rem;

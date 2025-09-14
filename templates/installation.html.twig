@@ -1,24 +1,13 @@
-{% extends "layout/page.html.twig" %}
-
-{#<section class="page-header">#}
-{#    <div class="page-header__container page-container">#}
-{#        <h1 class="page-header__title">Installation</h1>#}
-{#        <p class="page-header__subtitle">#}
-{#            Follow these steps to install and set up Twig CS Fixer in your project.#}
-{#        </p>#}
-{#    </div>#}
-{#</section>#}
+{% extends 'layout/page.html.twig' %}
 
 {% block markdown -%}
     {{- source('@docs/installation.md')|raw -}}
 {% endblock %}
-    
+
 {% block prev_next %}
     {{ include('component/_prev_next.html.twig', {
         links: {
             '/installation': 'Installation Guide',
-            '/examples': 'Examples',
-        }
+        },
     }) }}
 {% endblock %}
-    

@@ -20,11 +20,12 @@
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
+
     <link rel="preload" href="/images/twig-cs-fixer-leaf.png" as="image" />
 
     <script>
-        const theme = localStorage.getItem('user-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        // Default to dark mode when no explicit preference is stored
+        const theme = localStorage.getItem('user-theme') || 'dark';
         document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
     </script>
 
@@ -42,11 +43,11 @@
 </head>
 <body>
 {% block body %}
-    
+
     {{ include('layout/_logo.svg.twig') }}
-    
+
     {% block header %}
-        {{ include('layout/_header.html.twig', {currrent_url}) }}
+        {{ include('layout/_header.html.twig', {current_url: current_url}) }}
     {% endblock %}
 
     {% block main %}
