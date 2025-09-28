@@ -16,10 +16,15 @@
             gap: var(--space-lg);
 
             li {
+                p {
+                    margin-block-end: var(--space-xs);
+                }
                 p:first-child {
-                    border-block-end: 1px solid var(--color-surface-secondary);
-                    padding-block-end: 1rem;
-                    margin-block-end: 1rem;
+                    
+                    ~ * {
+                        margin-inline-start: 1rem;
+                    }
+                    
                     font-size: .7rem;
                     font-weight: 300;
                     display: flex;
@@ -29,7 +34,6 @@
                     strong {
                         font-weight: 600;
                         font-size: 1.3rem;
-                        margin-inline-end: 100%;
                     }
                 }
             }

@@ -12,7 +12,7 @@
         #token-types + ul,
         #token-types + p + ul {
             li {
-                margin-block-end: var(--space-lg);
+                margin-block-end: var(--space-xs);
             }
             li > p:first-child:not(:last-child) {
                 font-size: var(--font-size-sm);
@@ -20,11 +20,12 @@
                 background: var(--color-surface-secondary);
                 display: inline-block;
                 font-weight: var(--font-weight-normal);
-                padding: var(--space-2xs) var(--space-sm);
-                margin-block-end: var(--space-xs);
+                padding: var(--space-2xs) 0;
                 border-radius: var(--radius-md);
+                margin-block-end: var(--space-xs);
                 strong {
                     font-weight: var(--font-weight-normal);
+                    padding: var(--space-sm);
                 }
             }
             li > p + p {

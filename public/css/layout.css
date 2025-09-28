@@ -280,6 +280,11 @@
     display: grid;
      margin-bottom: var(--space-lg);
   }
+  
+  > ul > li:not(:has(ul,li,p)) {
+    list-style: initial;
+    margin-inline-start: var(--space-md);
+  }
 }
 
 

@@ -61,6 +61,9 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function ($content) {
     ];
 
     $content = trim($content);
+    
+    // Dirty temporary (?) hack to solve "rules" CSS situation
+    $content = str_replace("**:\n", "**\n", $content);
 
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
