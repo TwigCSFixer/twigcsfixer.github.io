@@ -73,37 +73,16 @@
     const beforeEl = document.getElementById('baBefore');
     const afterEl  = document.getElementById('baAfter');
 
-    const beforeCode = `{%if  user.active%}
-  <h2>{{ user.name | upper }}</h2>
-  <p>
-    {{ 'Joined:'~user.joinedAt|date(format="Y-m-d") }}
-  </p>
+    const beforeCode = `{%if  user.active%}\n  <h2>{{ user.name | upper }}</h2>\n  <p>\n    {{ 'Joined:'~user.joinedAt|date(format="Y-m-d") }}\n  </p>\n\n\n  {{ include('user/card.html.twig', {\n     "id":user.id,\n     "show":true,\n  } ) }}\n{%endif%}`;
 
-
-  {{ include('user/card.html.twig', {
-     "id":user.id,
-     "show":true,
-  } ) }}
-{%endif%}`;
-
-    const afterCode = `{% if user.active %}
-  <h2>{{ user.name|upper }}</h2>
-  <p>
-    {{ 'Joined:' ~ user.joinedAt|date(format: 'Y-m-d') }}
-  </p>
-  
-  {{ include("user/card.html.twig", {
-     id: user.id,
-     show: true,
-  }) }}
-{% endif %}`;
+    const afterCode = `{% if user.active %}\n  <h2>{{ user.name|upper }}</h2>\n  <p>\n    {{ 'Joined:' ~ user.joinedAt|date(format: 'Y-m-d') }}\n  </p>\n  \n  {{ include("user/card.html.twig", {\n     id: user.id,\n     show: true,\n  }) }}\n{% endif %}`;
 
     const steps = [
       { from: `{%if  user.active%}`, to: `{% if user.active %}` },
-      { from: `{{ user.name | upper }}`, to: `{{ user.name|upper }}` },
-      { from: `'Joined:'~user.joinedAt`, to: `'Joined:' ~ user.joinedAt` },
+      { from: ` | `, to: `|` },
+      { from: `~`, to: ` ~ ` },
       { from: `format="Y-m-d"`, to: `format: 'Y-m-d'` },
-      { from: `</p>\n\n\n  {{ include`, to: `</p>\n\n  {{ include` },
+      { from: `</p>\n\n\n  {{ include`, to: `</p>\n  \n  {{ include` },
       { from: `'user/card.html.twig'`, to: `"user/card.html.twig"` },
       { from: `"id":user.id`, to: `id: user.id` },
       { from: `"show":true,`, to: `show: true,` },
@@ -144,11 +123,7 @@
             const endIndex = startIndex + step.from.length;
 
             if (beforeEl) {
-                const beforeStartIndex = currentCode.indexOf(step.from);
-                if (beforeStartIndex !== -1) {
-                    const beforeEndIndex = beforeStartIndex + step.from.length;
-                    beforeEl.innerHTML = renderWithHighlight(currentCode, beforeStartIndex, beforeEndIndex, 'ba-old');
-                }
+                beforeEl.innerHTML = renderWithHighlight(currentCode, startIndex, endIndex, 'ba-old');
             }
 
             const nextCode = currentCode.substring(0, startIndex) + step.to + currentCode.substring(endIndex);
