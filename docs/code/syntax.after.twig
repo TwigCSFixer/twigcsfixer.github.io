@@ -1,4 +1,11 @@
-{{ name|upper|lower }}
-{{ user.name }}
-{{ user[name] }}
-{% for i in 1..12 %}{% endfor %}
+{% if user.active %}
+  <h2>{{ user.name|upper }}</h2>
+  <p>
+    {{ 'Joined:' ~ user.joinedAt|date(format: 'Y-m-d') }}
+  </p>
+  
+  {{ include("user/card.html.twig", {
+     id: user.id,
+     show: true,
+  }) }}
+{% endif %}
