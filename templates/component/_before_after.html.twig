@@ -5,6 +5,7 @@
     background: rgba(239, 68, 68, .08);
     border-radius: 4px;
     color: #fff;
+    animation: ba-flash-old 800ms ease-out forwards;
   }
   .ba-new {
     background: rgba(34, 197, 94, .18);
@@ -15,6 +16,11 @@
   @keyframes ba-flash {
     0%   { box-shadow: 0 0 0 0 rgba(34,197,94,.45); }
     70%  { box-shadow: 0 0 0 12px rgba(34,197,94,0); }
+    100% { box-shadow: none; }
+  }
+  @keyframes ba-flash-old {
+    0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, .45); }
+    70%  { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
     100% { box-shadow: none; }
   }
 
@@ -109,8 +115,10 @@
         reset();
         let currentCode = beforeCode;
 
-        const flashDelay = 400;
+        const flashDelay = 800;
         const betweenDelay = 200;
+
+        await new Promise(r => setTimeout(r, betweenDelay));
 
         for (const step of steps) {
             if (token !== runToken) { running = false; return; }
