@@ -15,10 +15,6 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $uri = $_SERVER['REQUEST_URI'] ?? '/';
 $page = trim($uri, '/') ?: 'index';
-if (!\ctype_alnum($page)) {
-    http_response_code(404);
-    exit;
-}
 
 // ---- TWIG ENVIRONMENT ----
 
@@ -27,6 +23,13 @@ $loader->addPath(__DIR__.'/../docs', 'docs');
 $twig = new Environment($loader, [
     'debug' => true,
 ]);
+
+$template = $page.'.html.twig';
+if (!$twig->getLoader()->exists($template)) {
+    http_response_code(404);
+    exit;
+}
+
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $twig->addFilter(new TwigFilter('markdown', function ($content) {
@@ -63,7 +66,11 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function ($content) {
     $content = trim($content);
     
     // Dirty temporary (?) hack to solve "rules" CSS situation
-    $content = str_replace("**:\n", "**\n", $content);
+    $content = str_replace(
+        ["**:\n", "(Configurable):\n"],
+        ["**\n", "(Configurable)\n"],
+        $content
+    );
 
     $environment = new CommonMarkEnvironment($config);
     $environment->addExtension(new CommonMarkCoreExtension());
@@ -149,7 +156,7 @@ $twig->addFilter(new TwigFilter('markdown_with_toc', function ($content) {
 
 // ---- RENDER PAGE ----
 
-echo $twig->render($page.'.html.twig', [
+echo $twig->render($template, [
     'page' => $page,
     'current_url' => $uri,
     'composer_package' => 'vincentlanglet/twig-cs-fixer',

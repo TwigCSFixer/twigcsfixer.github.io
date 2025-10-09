@@ -1,0 +1,7 @@
+{% extends 'layout/page.html.twig' %}
+
+{% set page = 'Ignoring errors' %}
+
+{% block markdown -%}
+    {{ source('@docs/ignoring-errors.md')|raw }}
+{%- endblock %}

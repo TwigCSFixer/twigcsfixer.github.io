@@ -1,4 +1,5 @@
 bin/public
+tmp
 var
 vendor
 composer.lock

@@ -68,6 +68,10 @@
     font-size: var(--font-size-2xl);
   }
 
+  h1 + h2, h2 + h3, h3 + h4 {
+    margin-top: 0;
+  }
+
   p {
     margin-bottom: var(--space-lg);
     line-height: var(--line-height-relaxed);
