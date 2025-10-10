@@ -41,10 +41,9 @@ The `TwigCsFixer\Token\Tokenizer` transform the file into a list of tokens which
 
 - **TwigCsFixer\Token\Token::STRING_TYPE**:
 
-Any single quote string or double quote string without interpolation string inside `{%` or `{{` delimiters.
-Like `'string'/"string"` in `{{ 'string' }}`, `{% if foo('string') %}`, `{{ "string" }}` or `{% if foo("string") %}`.
-
-It can also include part of string with interpolation, like both string in `{{ 'string#{interpolation}string' }}`.
+  Any single quote string or double quote string without interpolation string inside `{%` or `{{` delimiters.
+  Like `'string'`/`"string"` in `{{ 'string' }}`, `{% if foo('string') %}`, `{{ "string" }}` or `{% if foo("string") %}`.
+  It can also include part of string with interpolation, like both string in `{{ 'string#{interpolation}string' }}`.
 
 - **TwigCsFixer\Token\Token::OPERATOR_TYPE**:
 
@@ -211,7 +210,6 @@ final class MyCustomRule extends \TwigCsFixer\Rules\AbstractRule {
 
 Rules can also be based on the Twig Node and NodeVisitor logic. Because they are
 different from the default token based rules, these rules have some limitations:
-
 - they cannot be fixable.
 - they can only report the line with the error but not the token position.
 
