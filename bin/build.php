@@ -1,14 +1,15 @@
 <?php
 
+use TwigCSWebsite\TwigFactory;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../src/TwigFactory.php';
 
+$projectDir = dirname(__DIR__);
 $buildDir = Path::canonicalize(__DIR__.'/public');
-$templateDir = __DIR__.'/../templates';
+$templateDir = $projectDir.'/templates';
 
 $fs = new Filesystem();
 
@@ -24,13 +25,13 @@ $fs->mkdir($buildDir.'/images', 0755);
 $fs->mirror(__DIR__.'/../public/images', $buildDir.'/images');
 
 // Configure Twig
-$loader = new FilesystemLoader($templateDir);
-$twig = new Environment($loader);
+$factory = new TwigFactory($projectDir);
+$twig = $factory->getEnvironment();
 
 // Render HTML files
 $pages = glob($templateDir.'/*.html.twig');
-foreach ($pages as $page) {
-    $page = basename($page, '.html.twig');
+foreach ($pages as $pageFile) {
+    $page = basename($pageFile, '.html.twig');
     $uri = '/'.($page === 'index' ? '' : $page);
     $html = $twig->render($page.'.html.twig', [
         'page' => $page,
@@ -38,6 +39,7 @@ foreach ($pages as $page) {
         'composer_package' => 'vincentlanglet/twig-cs-fixer',
         'github_repository' => 'vincentlanglet/twig-cs-fixer',
         'github_username' => 'vincentlanglet',
+        'github_url' => 'https://github.com/vincentlanglet/twig-cs-fixer',
     ]);
     $fs->dumpFile(Path::join($buildDir, '/', $page.'.html'), $html);
 }
