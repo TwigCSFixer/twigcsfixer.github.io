@@ -81,6 +81,49 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             window.tocHighlighter = new TOC();
+
+            const tocLayout = document.querySelector('.toc-layout');
+            const tocToggle = document.querySelector('.toc-toggle');
+            const tocContainer = document.querySelector('.toc-layout__toc');
+            const mobileQuery = window.matchMedia('(max-width: 1023px)');
+
+            if (tocToggle && tocContainer) {
+                if (tocLayout) {
+                    tocLayout.classList.add('has-toc-toggle');
+                }
+
+                const collapsedLabel = tocToggle.dataset.labelCollapsed || tocToggle.textContent.trim();
+                const expandedLabel = tocToggle.dataset.labelExpanded || collapsedLabel;
+                const setToggleLabel = (isOpen) => {
+                    tocToggle.textContent = isOpen ? expandedLabel : collapsedLabel;
+                };
+
+                const syncState = () => {
+                    if (mobileQuery.matches) {
+                        tocContainer.classList.remove('is-open');
+                        tocToggle.setAttribute('aria-expanded', 'false');
+                        setToggleLabel(false);
+                    } else {
+                        tocContainer.classList.add('is-open');
+                        tocToggle.setAttribute('aria-expanded', 'true');
+                        setToggleLabel(true);
+                    }
+                };
+
+                tocToggle.addEventListener('click', () => {
+                    const isOpen = tocContainer.classList.toggle('is-open');
+                    tocToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    setToggleLabel(isOpen);
+                });
+
+                if (typeof mobileQuery.addEventListener === 'function') {
+                    mobileQuery.addEventListener('change', syncState);
+                } else if (typeof mobileQuery.addListener === 'function') {
+                    mobileQuery.addListener(syncState);
+                }
+
+                syncState();
+            }
         });
     </script>
 {% endblock %}
@@ -137,7 +180,17 @@
             {% set markdown_data = markdown_raw|markdown_with_toc %}
 
             {# Generate TOC #}
-            <div class="toc-layout__toc">
+            <button
+                type="button"
+                class="toc-toggle"
+                aria-controls="page-toc"
+                aria-expanded="false"
+                data-label-collapsed="Show table of contents"
+                data-label-expanded="Hide table of contents"
+            >
+                Show table of contents
+            </button>
+            <div class="toc-layout__toc" id="page-toc">
                 <div class="toc toc--sticky">
                     {# Generate the Table of Contents #}
                     {{ include('component/_toc.html.twig', {toc: markdown_data.toc}) }}

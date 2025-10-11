@@ -111,7 +111,7 @@
         if (running) return;
         running = true;
         const token = ++runToken;
-        
+
         reset();
         let currentCode = beforeCode;
 
@@ -140,7 +140,7 @@
             if (afterEl) {
                 afterEl.innerHTML = renderWithHighlight(nextCode, startIndex, newEndIndex, 'ba-new');
             }
-            
+
             await new Promise(r => setTimeout(r, flashDelay));
             if (token !== runToken) { running = false; return; }
 
