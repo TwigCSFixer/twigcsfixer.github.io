@@ -146,7 +146,6 @@
 
             currentCode = nextCode;
             if (afterEl) afterEl.innerHTML = escapeHtml(currentCode);
-            if (beforeEl) beforeEl.innerHTML = escapeHtml(currentCode);
 
             await new Promise(r => setTimeout(r, betweenDelay));
         }
