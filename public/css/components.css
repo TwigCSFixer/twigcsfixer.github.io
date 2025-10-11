@@ -819,16 +819,16 @@
     transition: all var(--transition-fast);
 
     scale: 1.25;
-    opacity: .25;
+    opacity: .65;
   }
 
   /* Apply blend mode only in dark theme */
   html[data-theme="dark"] .used-by__avatar {
-    mix-blend-mode: overlay;
+    mix-blend-mode: hard-light;
   }
 
   .used-by__link:hover .used-by__avatar {
-    opacity: .9;
+    opacity: 1;
     transform: translateY(-2px);
     mix-blend-mode: normal;
     filter: grayscale(0);
@@ -836,7 +836,7 @@
 
   .used-by__name {
     padding-top: var(--space-md);
-    opacity: .5;
+    opacity: .65;
     font-size: var(--font-size-md);
     color: var(--color-text-secondary);
     transition: all var(--transition-fast);
