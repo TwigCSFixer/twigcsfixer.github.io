@@ -164,7 +164,7 @@
         }
     </style>
 
-    <section class="page-header">
+    <section class="page-header" data-animate="fade-in">
         <div class="page-header__container page-container">
             <h1 class="page-header__title">{{ page|title }}</h1>
         </div>
@@ -190,14 +190,14 @@
             >
                 Show table of contents
             </button>
-            <div class="toc-layout__toc" id="page-toc">
+            <div class="toc-layout__toc" id="page-toc" data-animate="fade-right" data-animate-delay="200ms">
                 <div class="toc toc--sticky">
                     {# Generate the Table of Contents #}
                     {{ include('component/_toc.html.twig', {toc: markdown_data.toc}) }}
                 </div>
             </div>
 
-            <div class="toc-layout__content">
+            <div class="toc-layout__content" data-animate="fade-in" data-animate-delay="160ms">
                 {{ markdown_data.content|raw }}
             </div>
         </div>

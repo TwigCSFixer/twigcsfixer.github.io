@@ -37,6 +37,51 @@
                 document.querySelectorAll('pre code').forEach(block => {
                     hljs.highlightElement(block);
                 });
+
+                const animatedElements = Array.from(document.querySelectorAll('[data-animate]'));
+                if (animatedElements.length === 0) {
+                    return;
+                }
+
+                const prefersReducedMotion = typeof window.matchMedia === 'function'
+                    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+                    : null;
+                const shouldReduceMotion = prefersReducedMotion && prefersReducedMotion.matches;
+                const supportsIntersectionObserver = 'IntersectionObserver' in window;
+
+                if (shouldReduceMotion || !supportsIntersectionObserver) {
+                    animatedElements.forEach(element => {
+                        element.classList.add('is-animated');
+                    });
+                    return;
+                }
+
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+                        entry.target.classList.add('is-animated');
+                        obs.unobserve(entry.target);
+                    });
+                }, {
+                    threshold: 0.2,
+                    rootMargin: '0px 0px -10%'
+                });
+
+                animatedElements.forEach(element => {
+                    const delay = element.dataset.animateDelay;
+                    if (delay) {
+                        element.style.setProperty('--animate-delay', delay);
+                    }
+                    const rect = element.getBoundingClientRect();
+                    const isInViewport = rect.top < window.innerHeight * 0.9 && rect.bottom > 0;
+                    if (isInViewport) {
+                        element.classList.add('is-animated');
+                        return;
+                    }
+                    observer.observe(element);
+                });
             });
         </script>
     {% endblock %}

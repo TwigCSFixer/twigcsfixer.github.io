@@ -25,6 +25,52 @@
     }
   }
 
+  /* Scroll animations */
+  [data-animate] {
+    --animate-delay: 0s;
+    --animate-duration: 600ms;
+    --animate-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition:
+      opacity var(--animate-duration) var(--animate-ease) var(--animate-delay),
+      transform var(--animate-duration) var(--animate-ease) var(--animate-delay);
+    will-change: opacity, transform;
+  }
+
+  [data-animate].is-animated {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  [data-animate="fade-in"] {
+    transform: translate3d(0, 12px, 0);
+  }
+
+  [data-animate="fade-right"] {
+    transform: translate3d(-24px, 0, 0);
+  }
+
+  [data-animate="fade-left"] {
+    transform: translate3d(24px, 0, 0);
+  }
+
+  [data-animate="zoom-in"] {
+    transform: scale(0.96);
+  }
+
+  [data-animate="zoom-in"].is-animated {
+    transform: scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-animate] {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   /* Buttons */
   .button {
     display: inline-flex;
