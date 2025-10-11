@@ -123,22 +123,26 @@
         for (const step of steps) {
             if (token !== runToken) { running = false; return; }
 
+            const beforeStartIndex = beforeCode.indexOf(step.from);
+            if (beforeStartIndex === -1) {
+                console.warn('Step not found', step, beforeCode);
+                continue;
+            }
+
+            if (beforeEl) {
+                beforeEl.innerHTML = renderWithHighlight(beforeCode, beforeStartIndex, beforeStartIndex + step.from.length, 'ba-old');
+            }
+
             const startIndex = currentCode.indexOf(step.from);
             if (startIndex === -1) {
                 console.warn('Step not found', step, currentCode);
                 continue;
             }
-            const endIndex = startIndex + step.from.length;
 
-            if (beforeEl) {
-                beforeEl.innerHTML = renderWithHighlight(currentCode, startIndex, endIndex, 'ba-old');
-            }
-
-            const nextCode = currentCode.substring(0, startIndex) + step.to + currentCode.substring(endIndex);
-            const newEndIndex = startIndex + step.to.length;
+            const nextCode = currentCode.substring(0, startIndex) + step.to + currentCode.substring(startIndex + step.from.length);
 
             if (afterEl) {
-                afterEl.innerHTML = renderWithHighlight(nextCode, startIndex, newEndIndex, 'ba-new');
+                afterEl.innerHTML = renderWithHighlight(nextCode, startIndex, startIndex + step.to.length, 'ba-new');
             }
 
             await new Promise(r => setTimeout(r, flashDelay));
