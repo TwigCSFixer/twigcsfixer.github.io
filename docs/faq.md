@@ -14,7 +14,7 @@ Yes! Twig CS Fixer works with any framework that uses Twig templates, including:
 - Symfony
 - Drupal
 - Craft CMS
-- Any custom implementation using Twig 2.0+ or 3.0+
+- Any custom implementation using Twig 3.4+
 
 ## Usage
 
@@ -64,7 +64,7 @@ jobs:
             -   name: Install dependencies
                 run: composer install
             -   name: Check Twig templates
-                run: vendor/bin/twig-cs-fixer check templates/
+                run: vendor/bin/twig-cs-fixer lint templates/
 ```
 
 ### How do I update Twig CS Fixer?
@@ -92,19 +92,19 @@ return (new Config())
     ]);
 ```
 
-### What's the difference between 'fix' and 'check' commands?
+### What's the difference between 'fix' and 'lint' commands?
 
 Twig CS Fixer provides two main commands:
 
 - **fix**: Automatically fixes coding style issues in your templates
-- **check**: Only reports issues without modifying files (useful for CI/CD)
+- **lint**: Only reports issues without modifying files (useful for CI/CD)
 
 ```bash
 # Fix templates
 vendor/bin/twig-cs-fixer fix templates/
 
 # Check templates without modifying
-vendor/bin/twig-cs-fixer check templates/
+vendor/bin/twig-cs-fixer lint templates/
 ```
 
 ### How does Twig CS Fixer handle custom Twig extensions?
