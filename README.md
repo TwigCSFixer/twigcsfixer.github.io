@@ -1,9 +1,5 @@
 # Twig CS Fixer website
 
-
-Experimental/WIP
-
-
 ## Running Locally
 
 Get the code:
