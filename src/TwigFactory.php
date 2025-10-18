@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TwigCSWebsite;
 
 use League\CommonMark\Environment\Environment as CommonMarkEnvironment;
+use League\CommonMark\Exception\CommonMarkException;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\MarkdownConverter;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Zenstruck\CommonMark\Extension\GitHub\AdmonitionExtension;
@@ -15,11 +20,18 @@ final class TwigFactory
 {
     private string $projectDir;
 
-    /** @var array<string, mixed> */
+    /**
+     * @var array<string, mixed>
+     */
     private array $twigOptions;
 
     private Environment $twig;
 
+    /**
+     * @param array<string, mixed> $twigOptions
+     *
+     * @throws LoaderError
+     */
     public function __construct(string $projectDir, array $twigOptions = [])
     {
         $this->projectDir = $projectDir;
@@ -32,6 +44,9 @@ final class TwigFactory
         return $this->twig;
     }
 
+    /**
+     * @throws LoaderError
+     */
     private function createEnvironment(): Environment
     {
         $loader = new FilesystemLoader([$this->projectDir.'/templates']);
@@ -39,8 +54,9 @@ final class TwigFactory
 
         $twig = new Environment($loader, $this->twigOptions);
 
-        if (!empty($this->twigOptions['debug'])) {
-            $twig->addExtension(new \Twig\Extension\DebugExtension());
+        $debug = $this->twigOptions['debug'] ?? false;
+        if (true === $debug) {
+            $twig->addExtension(new DebugExtension());
         }
 
         $this->registerFilters($twig);
@@ -54,6 +70,9 @@ final class TwigFactory
         $twig->addFilter(new TwigFilter('markdown_with_toc', [$this, 'renderMarkdownWithToc'], ['is_safe' => ['html']]));
     }
 
+    /**
+     * @throws CommonMarkException
+     */
     public function renderMarkdown(string $content): string
     {
         $config = [
@@ -66,6 +85,8 @@ final class TwigFactory
 
     /**
      * @return array{content: string, toc: array<int, array<string, mixed>>}
+     *
+     * @throws CommonMarkException
      */
     public function renderMarkdownWithToc(string $content): array
     {
@@ -95,11 +116,13 @@ final class TwigFactory
         $xpath = new \DOMXPath($dom);
 
         $toc = [];
+        /** @var \DOMNodeList<\DOMElement> $headings */
         $headings = $xpath->query('//h2|//h3|//h4');
 
+        /** @var \DOMNodeList<\DOMElement> $h1Headings */
         $h1Headings = $xpath->query('//h1');
         foreach ($h1Headings as $h1) {
-            if ($h1->parentNode !== null) {
+            if (null !== $h1->parentNode) {
                 $h1->parentNode->removeChild($h1);
             }
         }
@@ -108,6 +131,7 @@ final class TwigFactory
             $level = (int) substr($heading->nodeName, 1);
             $text = $heading->textContent;
             $slug = preg_replace('/[^a-z0-9]+/', '-', strtolower($text));
+            \assert(null !== $slug);
             $slug = trim($slug, '-');
 
             $heading->setAttribute('id', $slug);
@@ -124,7 +148,7 @@ final class TwigFactory
 
         $htmlBody = '';
         $body = $dom->getElementsByTagName('body')->item(0);
-        if ($body !== null) {
+        if (null !== $body) {
             foreach ($body->childNodes as $node) {
                 $htmlBody .= $dom->saveHTML($node);
             }
@@ -135,6 +159,7 @@ final class TwigFactory
             static fn (array $matches): string => $matches[1].'="/'.$matches[3].$matches[4].'"',
             $htmlBody
         );
+        \assert(null !== $htmlBody);
 
         return [
             'content' => $htmlBody,
@@ -144,12 +169,14 @@ final class TwigFactory
 
     /**
      * @param array<int, array<string, mixed>> $flatToc
+     *
+     * @return array<array<string, mixed>>
      */
     private function buildNestedToc(array $flatToc, int &$index, int $parentLevel): array
     {
         $nested = [];
 
-        while ($index < count($flatToc)) {
+        while ($index < \count($flatToc)) {
             $item = $flatToc[$index];
 
             if ($item['level'] <= $parentLevel) {
@@ -157,9 +184,9 @@ final class TwigFactory
             }
 
             $item['children'] = [];
-            $index++;
+            ++$index;
 
-            if ($index < count($flatToc) && $flatToc[$index]['level'] > $item['level']) {
+            if ($index < \count($flatToc) && $flatToc[$index]['level'] > $item['level']) {
                 $item['children'] = $this->buildNestedToc($flatToc, $index, $item['level']);
             }
 
@@ -171,6 +198,8 @@ final class TwigFactory
 
     /**
      * @param array<string, mixed> $config
+     *
+     * @throws CommonMarkException
      */
     private function convertMarkdown(string $content, array $config): string
     {

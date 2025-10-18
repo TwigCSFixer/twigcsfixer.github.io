@@ -1,7 +1,9 @@
 {
     "license": "proprietary",
-    "name": "smnandre/twigcs-website",
+    "name": "twigcsfixer/twigcsfixer.github.io",
     "require": {
+        "php": "^8.4",
+        "ext-dom": "*",
         "twig/twig": "^3.21"
     },
     "require-dev": {
@@ -10,7 +12,10 @@
         "symfony/http-client": "^7.3",
         "symfony/var-dumper": "^7.3",
         "vincentlanglet/twig-cs-fixer": "^3.9",
-        "zenstruck/commonmark-extensions": "1.x-dev"
+        "zenstruck/commonmark-extensions": "1.x-dev",
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.88",
+        "phpstan/phpstan-strict-rules": "^2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

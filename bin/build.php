@@ -1,8 +1,10 @@
 <?php
 
-use TwigCSWebsite\TwigFactory;
+declare(strict_types=1);
+
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
+use TwigCSWebsite\TwigFactory;
 
 require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../src/TwigFactory.php';
@@ -14,14 +16,14 @@ $templateDir = $projectDir.'/templates';
 $fs = new Filesystem();
 
 // Build Directory
-$fs->mkdir($buildDir, 0755);
+$fs->mkdir($buildDir, 0o755);
 
 // Copy CSS files
-$fs->mkdir($buildDir.'/css', 0755);
+$fs->mkdir($buildDir.'/css', 0o755);
 $fs->mirror(__DIR__.'/../public/css', $buildDir.'/css');
 
 // Copy Images
-$fs->mkdir($buildDir.'/images', 0755);
+$fs->mkdir($buildDir.'/images', 0o755);
 $fs->mirror(__DIR__.'/../public/images', $buildDir.'/images');
 
 // Configure Twig
@@ -30,9 +32,10 @@ $twig = $factory->getEnvironment();
 
 // Render HTML files
 $pages = glob($templateDir.'/*.html.twig');
+assert(false !== $pages);
 foreach ($pages as $pageFile) {
     $page = basename($pageFile, '.html.twig');
-    $uri = '/'.($page === 'index' ? '' : $page);
+    $uri = '/'.('index' === $page ? '' : $page);
     $html = $twig->render($page.'.html.twig', [
         'page' => $page,
         'current_url' => $uri,

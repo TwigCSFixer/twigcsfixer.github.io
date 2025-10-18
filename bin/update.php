@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpClient\HttpClient;
@@ -12,8 +14,8 @@ $tmpDir = __DIR__.'/../tmp';
 $fs = new Filesystem();
 
 // Build Directories (if needed)
-$fs->mkdir($tmpDir, 0755);
-$fs->mkdir($docsDir, 0755);
+$fs->mkdir($tmpDir, 0o755);
+$fs->mkdir($docsDir, 0o755);
 
 // Fetch docs from GitHub
 $githubUrl = 'https://api.github.com/repos/VincentLanglet/Twig-CS-Fixer/';
@@ -30,13 +32,15 @@ if (!isset($readmeData['download_url'])) {
 }
 
 $readmeContent = $httpClient->request('GET', $readmeData['download_url'])->getContent();
-if (!preg_match('/^##\s+Instal.*?(?=^##?\s)/ims', $readmeContent, $matches)) {
+if (1 !== preg_match('/^##\s+Instal.*?(?=^##?\s)/ims', $readmeContent, $matches)) {
     throw new RuntimeException('Installation section not found in README.');
 }
 
 $installContent = ltrim($matches[0]);
 $installContent = preg_replace('/\[!\[.*?\]\(.*?\)\]\(.*?\)/', '', $installContent); // Remove badges
+assert(null !== $installContent);
 $installContent = preg_replace('/<!--.*?-->/s', '', $installContent); // Remove HTML comments
+assert(null !== $installContent);
 $installContent = trim($installContent);
 
 // Move up title levels for installation (h2->h1, h3->h2, etc.)
@@ -45,6 +49,7 @@ $installContent = preg_replace_callback(
     fn ($match): string => str_repeat('#', strlen($match[1]) - 1),
     $installContent
 );
+assert(null !== $installContent);
 
 // Save installation content
 $fs->dumpFile($docsDir.'/installation.md', $installContent);
