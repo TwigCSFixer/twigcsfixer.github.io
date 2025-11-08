@@ -278,6 +278,8 @@
     font-size: var(--font-size-md);
     line-height: 1.6;
     color: var(--code-text);
+    word-break: break-word; /* allow long tokens to wrap */
+    overflow-wrap: anywhere; /* permit wrapping anywhere for very long lines */
   }
 
   .code--keyword {
@@ -366,6 +368,14 @@
     flex-wrap: wrap;
     gap: var(--space-xl);
     justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .cta__actions,
+    .cta__buttons {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
   }
 
   /* Installation Page */

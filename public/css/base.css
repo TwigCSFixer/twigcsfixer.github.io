@@ -81,4 +81,17 @@
     list-style: none;
     margin-bottom: var(--space-lg);
   }
+
+  /* Additional breakpoint below 480px */
+  @media (max-width: 480px) {
+    body {
+      font-size: calc(var(--font-size-md) * 0.875);
+    }
+    h1 {
+      font-size: var(--font-size-4xl);
+    }
+    h2 {
+      font-size: var(--font-size-3xl);
+    }
+  }
 }
