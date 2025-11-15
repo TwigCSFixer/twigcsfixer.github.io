@@ -317,8 +317,7 @@
   }
 
   .code-panel {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     height: 100%;
   }
 
