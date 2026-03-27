@@ -27,6 +27,11 @@
 
   Ensures that 2 empty lines do not follow each other.
 
+- **EndBlockNameRule** (Configurable):
+
+  Ensures that end block or end macro has a name. Options are:
+    - `blocks`: list of the block to apply this rule to (default 'block' and 'macro').
+
 - **HashQuoteRule** (Configurable): 
 
   Ensures that hash key are not unnecessarily quoted. Options are:
@@ -54,15 +59,18 @@
 
   Ensures there is no consecutive spaces inside operator names.
 
-- **OperatorSpacingRule**:
+- **OperatorSpacingRule**: (Configurable):
 
-  Ensures there is one space before and after an operator except for `..`.
+  Ensures there is no space before and after ':', '..' and '?.', and 
+  there is one space before and after other operators. Options are:
+    - `beforeOverride`: used to override the space before check for specific operators.
+    - `afterOverride`: used to override the space after check for specific operators.
 
 - **PunctuationSpacingRule** (Configurable):
 
   Ensures there is no space before and after a punctuation except for `:` and `,`. Options are:
-    - `punctuationWithSpaceBefore`: used to override the space before check.
-    - `punctuationWithSpaceAfter`: used to override the space after check.
+    - `beforeOverride`: used to override the space before check for specific punctuations.
+    - `afterOverride`: used to override the space after check for specific punctuations.
 
 - **SingleQuoteRule** (Configurable):
 
@@ -142,7 +150,7 @@ All of them can be found in `src/Rules/Node` folder.
   Ensures some functions are not used. Options are:
     - `function`: the name of the forbidden functions.
 
-- **ValidConstantRule**:
+- **ValidConstantFunctionRule**:
 
   Ensures constant function is used on defined constant strings.
 
