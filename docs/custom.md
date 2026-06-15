@@ -47,11 +47,21 @@ The `TwigCsFixer\Token\Tokenizer` transform the file into a list of tokens which
 
 - **TwigCsFixer\Token\Token::OPERATOR_TYPE**:
 
-  Any twig operator like `+`, `-`, `and`, `or`, etc. Also include `?` and `:` when used in ternary.
+  Any twig binary operator: arithmetic (`+`, `-`, `*`, `/`), logical (`and`, `or`),
+  comparison (`==`, `!=`), member access (`.`, `?.`), filter (`|`), etc.
+
+- **TwigCsFixer\Token\Token::UNARY_OPERATOR_TYPE**:
+
+  Any twig unary operator like `not`, `-`, `+`.
+
+- **TwigCsFixer\Token\Token::TERNARY_OPERATOR_TYPE**:
+
+  The characters `?` and `:` when used in ternary.
 
 - **TwigCsFixer\Token\Token::PUNCTUATION_TYPE**:
 
-  One of the `(`, `)`, `[`, `]`, `{`, `}`, `:`, `.`, `,`, `|` characters. For `:`, only when it's not a ternary.
+  One of the `(`, `)`, `[`, `]`, `{`, `}`, `:`, `,` characters.
+  For `:`, only when it's not a ternary nor a slice operator.
 
 - **TwigCsFixer\Token\Token::INTERPOLATION_START_TYPE**:
 
@@ -60,14 +70,6 @@ The `TwigCsFixer\Token\Tokenizer` transform the file into a list of tokens which
 - **TwigCsFixer\Token\Token::INTERPOLATION_END_TYPE**:
 
   The characters `}` inside a double-quoted string. Like `{{ "string #{interpolation}" }}`.
-
-- **TwigCsFixer\Token\Token::ARROW_TYPE**:
-
-  The `=>` used for arrow functions.
-
-- **TwigCsFixer\Token\Token::SPREAD_TYPE**:
-
-  The `...` spread operator.
 
 - **TwigCsFixer\Token\Token::DQ_STRING_START_TYPE**:
 
